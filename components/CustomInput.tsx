@@ -21,6 +21,8 @@ const CustomInput = ({control, name, label, placeholder, type}: CustomInput) => 
       name={name}
       render={({ field }) => (
         <div className="form-item">
+          {/* Use the 'FormLabel' below if you don't want the label to change color on errors */}
+          {/* <FormLabel style={{ color: 'inherit' }} className="form-label"></FormLabel> */}
           <FormLabel className="form-label">
             {label}
           </FormLabel>

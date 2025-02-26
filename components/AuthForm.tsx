@@ -30,7 +30,6 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log('Henlo');
     setIsLoading(true)
     try {
       console.log('onSubmit', data);
@@ -87,7 +86,7 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
 
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-12">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-4">
               {
                 type === TAuthForm.SIGN_UP && (
                   <>
