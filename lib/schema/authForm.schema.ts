@@ -34,3 +34,7 @@ export const authFormSchema = (type: TAuthForm) => {
         password: z.string().min(8, { message: "Password must be at least 8 characters." }),
       })
 }
+
+// These are for using 'z.infer' since making a 'authFormSchema' causes a TS error ('authForm' is assigned a value but only used as a type)
+export const signUpForm = authFormSchema(TAuthForm.SIGN_UP)
+export const signInForm = authFormSchema(TAuthForm.SIGN_IN)

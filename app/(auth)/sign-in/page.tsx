@@ -1,5 +1,5 @@
 import { TAuthForm } from '@/constants/enums'
-import AuthForm from '@/src/AuthForm'
+import AuthForm from '@/components/AuthForm'
 import React from 'react'
 
 const signIn = () => {
