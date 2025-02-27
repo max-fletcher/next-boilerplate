@@ -50,8 +50,6 @@ const ButtonGroup = ({
     buttonRefs.current = buttonRefs.current.slice(0, buttons.length);
   }, [buttons]);
 
-  console.log('isToggle', isToggle, 'activeIndex', activeIndex);
-
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
     index: number
@@ -107,7 +105,7 @@ const ButtonGroup = ({
                 orientation === 'vertical' &&
                 'border-b-[1px] last:border-b-0',
               isPill && 'first:rounded-l-full last:rounded-r-full',
-              isActive && 'buttonGroupBg',
+              isActive && 'buttonGroupBg dark:bg-red-900',
               'transition-colors hover:bg-primary/90 hover:text-primary-foreground',
               'focus:relative focus:z-10',
               color && `hover:bg-[var(--button-color)] hover:text-white`

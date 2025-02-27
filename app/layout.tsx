@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
+import { ModeToggle } from "@/components/ModeToggle";
+import { ThemeProvider } from "@/providers/theme.providers";
 
 // NOTE: creating and injecting fonts into the entire app
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
@@ -26,7 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${ibmPlexSerif.variable}`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ModeToggle />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

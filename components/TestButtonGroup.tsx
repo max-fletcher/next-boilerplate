@@ -8,7 +8,7 @@ const TestButtonGroup = () => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = (buttonName: string) => {
-    console.log(`${buttonName} clicked`);
+    console.log(`clicked`);
       setLoading(true);
       setTimeout(() => setLoading(false), 2000);
   };
