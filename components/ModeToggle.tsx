@@ -1,31 +1,35 @@
-"use client"
+"use client";
 
-import * as React from "react"
-// import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 // import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   return (
-  <div>
-    <Button className="bg-slate-400 dark:bg-red-600" onClick={() => {
-        console.log('dark clicked');
-        setTheme("dark")
-      }} variant="outline" size="icon">
-      Dark
-    </Button>
-    <Button className="bg-slate-400 dark:bg-red-600" onClick={
-        () => {
-          console.log('light clicked');
-          setTheme("light")
-        }
-      } variant="outline" size="icon">
-      Light
-    </Button>
-  </div>
-  )
+    <div>
+      <Button
+        onClick={() => {
+          setTheme("dark");
+        }}
+        className="flex dark:hidden justify-center"
+        variant="outline"
+        size="icon"
+      >
+        <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+      </Button>
+      <Button
+        onClick={() => setTheme("light")}
+        className="hidden dark:flex justify-center"
+        variant="outline"
+        size="icon"
+      >
+        <Moon className="-rotate-90 h-[1.2rem] w-[1.2rem] transition-all" />
+      </Button>
+    </div>
+  );
 }
