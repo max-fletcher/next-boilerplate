@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import { ModeToggle } from "@/components/ModeToggle";
 import { ThemeProvider } from "@/providers/theme.providers";
 
 // NOTE: creating and injecting fonts into the entire app
@@ -34,7 +33,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ModeToggle />
           {children}
         </ThemeProvider>
       </body>

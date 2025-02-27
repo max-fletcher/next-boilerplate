@@ -5,6 +5,8 @@
 // import { getLoggedInUser } from "../../lib/actions/user.actions"
 // import { redirect } from "next/navigation"
 
+import Navbar from "@/components/Navbar";
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Acts like a middleware. Will redirect user to "/sign-in" if he is not logged in
   // Using redirect instead of router.push since we are in a server component and router.push doesn't work in a server component
@@ -17,12 +19,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
       {/* NOTE: This is the mobile sidebar */}
       <div className="flex size-full flex-col">
-        <div className="root-layout">
-          {/* <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" /> */}
+        <Navbar />
+        {/* <div className="root-layout">
+          <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" />
           <div>
-            {/* <MobileNav user={loggedIn} /> */}
+            <MobileNav user={loggedIn} />
           </div>
-        </div>
+        </div> */}
       {children}
       </div>
     </main>
