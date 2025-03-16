@@ -52,7 +52,17 @@ const config: Config = {
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
-        }
+        },
+        // CUSTOM COLORS
+        blue: '#1fb6ff',
+        purple: '#7e5bef',
+        pink: '#ff49db',
+        orange: '#ff7849',
+        green: '#13ce66',
+        yellow: '#ffc82c',
+        'gray-dark': '#273444',
+        gray: '#8492a6',
+        'gray-light': '#d3dce6',
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -49,12 +49,12 @@
   /* .text-balance {
     text-wrap: balance;
   } */
-  .text-16 {
-    @apply text-[16px] leading-[24px];
+  .input-class {
+    @apply text-16 placeholder:text-16 rounded-lg border;
   }
 
-  .input-class {
-    @apply text-16 placeholder:text-16 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-500;
+  .text-16 {
+    @apply text-[16px] leading-[24px];
   }
 
   .menuBtnBg {
