@@ -5,7 +5,8 @@
 // import { getLoggedInUser } from "../../lib/actions/user.actions"
 // import { redirect } from "next/navigation"
 
-import Navbar from "@/components/Navbar";
+import LeftSidebar from "@/components/LeftSidebar";
+import Navbar from "@/components/navbar/Navbar";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Acts like a middleware. Will redirect user to "/sign-in" if he is not logged in
@@ -18,8 +19,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       {/* <Sidebar user={loggedIn} /> */}
 
       {/* NOTE: This is the mobile sidebar */}
-      <div className="flex size-full flex-col">
-        <Navbar />
+      <div className="size-full flex-col">
+        <div className="flex">
+          <LeftSidebar />
+          <Navbar />
+        </div>
         {/* <div className="root-layout">
           <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" />
           <div>

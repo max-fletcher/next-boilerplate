@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -11,7 +10,7 @@ export function ModeToggle() {
   const { setTheme } = useTheme();
 
   return (
-    <div>
+    <div className="h-full flex items-center">
       <Button
         onClick={() => {
           setTheme("dark");
