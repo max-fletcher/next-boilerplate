@@ -1,10 +1,10 @@
-import TestButtonGroup from '@/components/TestButtonGroup';
+// import TestButtonGroup from '@/components/TestButtonGroup';
 
 const page = () => {
 
   return (
     <div>
-      <TestButtonGroup />
+      Henlo
     </div>
   )
 }
