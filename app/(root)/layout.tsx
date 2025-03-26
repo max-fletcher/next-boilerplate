@@ -7,6 +7,14 @@
 
 import LeftSidebar from "@/components/LeftSidebar";
 import Navbar from "@/components/navbar/Navbar";
+import { User } from "@/types/User.types";
+
+const loggedInUser: User = {
+  id: 1,
+  name: 'John Doe',
+  email: 'john@mail.com',
+  thumbnail_url: '/public/profile.png',
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Acts like a middleware. Will redirect user to "/sign-in" if he is not logged in
@@ -17,20 +25,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <main className="flex h-screen w-full font-inter">
       {/* <Sidebar user={loggedIn} /> */}
+      <LeftSidebar user={loggedInUser} />
 
       {/* NOTE: This is the mobile sidebar */}
       <div className="size-full flex-col">
-        <div className="flex">
-          <LeftSidebar />
           <Navbar />
-        </div>
+          {children}
         {/* <div className="root-layout">
           <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" />
           <div>
             <MobileNav user={loggedIn} />
           </div>
         </div> */}
-      {children}
       </div>
     </main>
   )

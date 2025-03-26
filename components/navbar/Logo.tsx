@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 const Logo = ({ text } : {text: string}) => {
   return (
-    <div className={cn("h-12", pacifico.className)}>
+    <div className={cn("text-xl ms-5", pacifico.className)}>
         {text}
     </div>
   )
