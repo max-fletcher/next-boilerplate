@@ -1,4 +1,4 @@
-import { pacifico } from "@/lib/fonts"
+import { pacifico } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
 
 const Logo = ({ text } : {text: string}) => {
