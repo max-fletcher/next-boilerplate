@@ -1,11 +1,12 @@
 import { pacifico } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
-const Logo = ({ text } : {text: string}) => {
+const Logo = ({ text, link = '/' } : {text: string, link?: string}) => {  
   return (
-    <div className={cn("text-xl ms-5", pacifico.className)}>
+    <Link href={link} className={cn("text-xl ms-7", pacifico.className)}>
         {text}
-    </div>
+    </Link>
   )
 }
 
