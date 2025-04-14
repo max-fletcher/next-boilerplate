@@ -1,11 +1,13 @@
 // import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { TIconTypes } from "@/types/icon.types";
 import React from "react";
 
-const TableOfContentsIcon = ({ classes = 'fill-background dark:fill-[#030712] stroke-black dark:stroke-white', width = 20, height = 20 }: TIconTypes) => {
+const TableOfContentsIcon = ({ classes = '', width = 20, height = 20, isActive = false }: TIconTypes) => {
+  console.log(isActive)
   return (
     <svg
-      className={classes}
+      className={cn('fill-background dark:fill-[#030712] stroke-black dark:stroke-white', { 'fill-[#030712] dark:fill-white stroke-white dark:stroke-black' : isActive }, classes)}
       style={{width, height}}
       viewBox="0 0 17 16"
       xmlns="http://www.w3.org/2000/svg"

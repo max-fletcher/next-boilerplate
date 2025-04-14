@@ -6,40 +6,29 @@ import Image from "next/image"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
 import TableOfContentsIcon from "./icons/TableOfContentsIcon"
-import { Button } from "./ui/button"
+// import { Button } from "./ui/button"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import CartIcon from "./icons/Cart"
 
 export const sidebarLinks = [
   {
-    imgIcon: <TableOfContentsIcon
-            width={20}
-            height={20}
-          />,
+    imgIcon: TableOfContentsIcon,
     route: "/",
     label: "Tableau de bord",
   },
   {
-    imgIcon: <TableOfContentsIcon
-            width={20}
-            height={20}
-          />,
+    imgIcon: CartIcon,
     route: "/my-banks",
     label: "My Banks",
   },
   {
-    imgIcon: <TableOfContentsIcon
-            width={20}
-            height={20}
-          />,
+    imgIcon: TableOfContentsIcon,
     route: "/transaction-history",
     label: "Transaction History",
   },
   {
-    imgIcon: <TableOfContentsIcon
-            width={20}
-            height={20}
-          />,
+    imgIcon: TableOfContentsIcon,
     route: "/payment-transfer",
     label: "Transfer Funds",
   },
@@ -68,18 +57,18 @@ const LeftSidebar = ({user}: {user: User}) => {
 
       {sidebarLinks.map((item) => {
           const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
-          // console.log(pathname, item.route)
+          console.log(isActive, item)
 
           return (
             <Link
               key={item.label}
               href={item.route}
-              className={cn('sidebar-link', { 'active' : isActive } )} // A util function that merges classes. Uses twMerge under the hood.
-              >
+              className={cn('sidebar-link', { 'bg-black dark:bg-white' : isActive } )} // A util function that merges classes. Uses twMerge under the hood.
+            >
                 <div className="flex justify-center items-center relative size-6">
-                  {item.imgIcon}
+                  <item.imgIcon width={20} height={20} isActive={isActive} />
                 </div>
-                <p className={cn("sidebar-label", { "!text-blue-500": isActive }) }>
+                <p className={cn("sidebar-label", { "text-white dark:text-black": isActive }) }>
                   {item.label}
                 </p>
             </Link>
