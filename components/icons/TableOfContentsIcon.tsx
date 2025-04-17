@@ -1,7 +1,6 @@
 // import { cn } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { TIconTypes } from "@/types/icon.types";
-import React from "react";
 
 const TableOfContentsIcon = ({ classes = '', width = 20, height = 20, isActive = false }: TIconTypes) => {
   console.log(isActive)

@@ -10,6 +10,9 @@ import TableOfContentsIcon from "./icons/TableOfContentsIcon"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import CartIcon from "./icons/Cart"
+import OpenBoxIcon from "./icons/OpenBox"
+import SquareArrowUpIcon from "./icons/SquareArrowUp"
+import BoxIcon from "./icons/Box"
 
 export const sidebarLinks = [
   {
@@ -19,18 +22,23 @@ export const sidebarLinks = [
   },
   {
     imgIcon: CartIcon,
-    route: "/my-banks",
-    label: "My Banks",
+    route: "/commandes",
+    label: "Commandes",
   },
   {
-    imgIcon: TableOfContentsIcon,
-    route: "/transaction-history",
-    label: "Transaction History",
+    imgIcon: BoxIcon,
+    route: "/produits",
+    label: "Produits",
   },
   {
-    imgIcon: TableOfContentsIcon,
-    route: "/payment-transfer",
-    label: "Transfer Funds",
+    imgIcon: OpenBoxIcon,
+    route: "/emballage",
+    label: "Emballage",
+  },
+  {
+    imgIcon: SquareArrowUpIcon,
+    route: "/upsells",
+    label: "Upsells",
   },
 ];
 
