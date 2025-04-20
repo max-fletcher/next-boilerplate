@@ -70,8 +70,8 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
-    --border: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 240, 6%, 90%, 1;
+    --ring: 240, 6%, 90%, 1;
 
     /* --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
@@ -145,10 +145,26 @@
 
 @layer utilities {
   .sidebar-link {
-    @apply flex gap-3 items-center p-2 xl:p-3 rounded-lg justify-start;
+    @apply flex gap-3 items-center p-3 xl:p-2 rounded-lg justify-start;
   }
 
   .sidebar-label {
     @apply text-16 font-semibold;
+  }
+
+  .sidebar-group-1 {
+    @apply mt-4;
+  }
+
+  .sidebar-group-2 {
+    @apply mt-10;
+  }
+
+  .sidebar-group-3 {
+    @apply mt-10;
+  }
+
+  .sidebar-margin {
+    @apply mx-4;
   }
 }
