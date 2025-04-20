@@ -64,6 +64,11 @@
   .buttonGroupBg {
     background-color: #6D28D9;
   }
+
+  .separator {
+    border: 1px solid;
+    border-color: #1F2937;
+  }
 }
 
 @layer base {

@@ -1,10 +1,16 @@
-// import TestButtonGroup from '@/components/TestButtonGroup';
+import HomeButtonGroupContainer from "@/components/HomeButtonGroupContainer"
+import { geist } from "@/lib/fonts/fonts"
+import { cn } from "@/lib/utils"
 
 const page = () => {
-
   return (
-    <div>
-      Henlo
+    <div className="px-9 py-9">
+      <div className={cn("font-bold text-3xl", geist.className)}>
+        Tableau de bord
+      </div>
+      <hr className="separator my-5" />
+
+      <HomeButtonGroupContainer className="p-1 rounded-lg bg-[#1F2937]" buttonClassName="rounded opacity-50" buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" isToggle={true} orientation="horizontal" />
     </div>
   )
 }
