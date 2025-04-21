@@ -27,6 +27,8 @@ const config: Config = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        calendar_selected: "hsl(var(--calendar-selected))",
+        calendar_selected_text: "hsl(var(--calendar-selected-text))"
       },
     },
   },
