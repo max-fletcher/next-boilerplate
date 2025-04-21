@@ -15,6 +15,10 @@ const page = () => {
         <HomeButtonGroupContainer className="p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937]" buttonClassName="rounded opacity-50" buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" isToggle={true} orientation="horizontal" />
         <HomepageCalendar />
       </div>
+
+      <div>
+        
+      </div>
     </div>
   )
 }

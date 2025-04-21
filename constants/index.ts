@@ -5,7 +5,7 @@ import OpenBoxIcon from "@/components/icons/OpenBox";
 import SquareArrowUpIcon from "@/components/icons/SquareArrowUp";
 import TableOfContentsIcon from "@/components/icons/TableOfContentsIcon";
 import TicketIcon from "@/components/icons/Ticket";
-import UserIcon from "@/components/icons/uSER";
+import UserIcon from "@/components/icons/User";
 
 export const sidebarLinksGroup1 = [
   {
