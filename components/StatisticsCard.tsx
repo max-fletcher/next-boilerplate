@@ -16,7 +16,7 @@ const StatisticsCard = ({header, title, Icon, subtitle, subtitleClasses}: Statis
         <div className=''><Icon /></div>
       </div>
       <div className=''>
-        
+        {title}
       </div>
     </div>
   )
