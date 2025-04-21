@@ -36,7 +36,6 @@ const LeftSidebar = ({user}: {user: User}) => {
         <div className="sidebar-group-1 sidebar-margin">
           {sidebarLinksGroup1.map((item) => {
               const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
-              console.log(isActive, item)
 
               return (
                 <Link
@@ -58,7 +57,6 @@ const LeftSidebar = ({user}: {user: User}) => {
         <div className="sidebar-group-2 sidebar-margin">
           {sidebarLinksGroup2.map((item) => {
               const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
-              console.log(isActive, item)
 
               return (
                 <Link

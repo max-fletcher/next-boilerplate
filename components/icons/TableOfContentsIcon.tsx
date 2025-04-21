@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { TIconTypes } from "@/types/icon.types";
 
 const TableOfContentsIcon = ({ classes = '', width = 20, height = 20, isActive = false }: TIconTypes) => {
-  console.log(isActive)
   return (
     <svg
       className={cn('fill-background dark:fill-[#030712] stroke-black dark:stroke-white', { 'fill-[#030712] dark:fill-white stroke-white dark:stroke-black' : isActive }, classes)}
