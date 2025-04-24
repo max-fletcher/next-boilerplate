@@ -1,4 +1,3 @@
-// import { cn } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { TIconTypes } from "@/types/icon.types";
 
