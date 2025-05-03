@@ -13,7 +13,7 @@ interface StatisticsCardProp {
 
 const StatisticsCard = ({header, title, Icon, subtitle, subtitleClasses}: StatisticsCardProp) => {
   return (
-    <div className={cn("w-full border radius-xl p-3.5", geist.className)}>
+    <div className={cn("w-full border radius-xl p-3.5 rounded-xl", geist.className)}>
       <div className='flex justify-between'>
         <div className='text-sm font-medium'>{header}</div>
         <div className=''><Icon width={16} height={16} /></div>

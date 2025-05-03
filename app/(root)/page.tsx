@@ -1,3 +1,4 @@
+import HomeBarChart from "@/components/HomeBarChart"
 import HomeButtonGroupContainer from "@/components/HomeButtonGroupContainer"
 import HomepageCalendar from "@/components/HomepageCalendar"
 import CreditCardIcon from "@/components/icons/CreditCard"
@@ -26,6 +27,18 @@ const page = () => {
         <StatisticsCard header="Total de visiteurs" Icon={UserGroupIcon} title="2350" subtitle="impressions, Voir le rapport"/>
         <StatisticsCard header="Total Revenues" Icon={LineChartIcon} title="DA45,2310.89" subtitle="+20.1%" />
         <StatisticsCard header="Total Revenues" Icon={CreditCardIcon} title="DA45,2310.89" subtitle="+20.1%" />
+      </div>
+
+      <div className="grid gap-4 grid-cols-6">
+        <div className="col-span-4 border-2 rounded-xl">
+          <div className={cn("m-6 font-medium text-sm", geist.className)}>
+            Overview
+          </div>
+          <HomeBarChart className="px-5 py-4" />
+        </div>
+        <div className="col-span-2 border-2 rounded-xl">
+
+        </div>
       </div>
     </div>
   )

@@ -152,6 +152,14 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  :root {
+    --chart-1: 240, 10%, 4%, 1;
+  }
+ 
+  .dark {
+    --chart-1: 263, 70%, 50%, 1;
+  }
 }
 
 @layer utilities {
