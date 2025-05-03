@@ -1,4 +1,4 @@
-import HomeBarChart from "@/components/HomeBarChart"
+import CustomBarChart from "@/components/CustomBarChart"
 import HomeButtonGroupContainer from "@/components/HomeButtonGroupContainer"
 import HomepageCalendar from "@/components/HomepageCalendar"
 import CreditCardIcon from "@/components/icons/CreditCard"
@@ -8,6 +8,21 @@ import UserGroupIcon from "@/components/icons/UserGroup"
 import StatisticsCard from "@/components/StatisticsCard"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
+
+const chartData = [
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
+  { month: "July", desktop: 186 },
+  { month: "August", desktop: 305 },
+  { month: "September", desktop: 237 },
+  { month: "October", desktop: 73 },
+  { month: "November", desktop: 209 },
+  { month: "December", desktop: 214 },
+]
 
 const page = () => {
   return (
@@ -34,7 +49,7 @@ const page = () => {
           <div className={cn("m-6 font-medium text-sm", geist.className)}>
             Overview
           </div>
-          <HomeBarChart className="px-5 py-4" />
+          <CustomBarChart className="px-5 py-4" chartData={chartData} />
         </div>
         <div className="col-span-2 border-2 rounded-xl">
 
