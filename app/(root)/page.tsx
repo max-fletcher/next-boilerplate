@@ -39,9 +39,9 @@ const page = () => {
 
       <div className="flex gap-4 my-5">
         <StatisticsCard header="Total Revenues" Icon={DollarIcon} title="DA45,2310.89" subtitle="+20.1%" subtitleClasses="text-green-500" />
-        <StatisticsCard header="Total de visiteurs" Icon={UserGroupIcon} title="2350" subtitle="impressions, Voir le rapport"/>
-        <StatisticsCard header="Total Revenues" Icon={LineChartIcon} title="DA45,2310.89" subtitle="+20.1%" />
-        <StatisticsCard header="Total Revenues" Icon={CreditCardIcon} title="DA45,2310.89" subtitle="+20.1%" />
+        <StatisticsCard header="Total de visiteurs" Icon={UserGroupIcon} title="2350" subtitle="impressions, Voir le rapport" subtitleClasses="text-muted underline" />
+        <StatisticsCard header="Total Revenues" Icon={LineChartIcon} title="DA45,2310.89" subtitle="+20.1%" subtitleClasses="text-muted underline" />
+        <StatisticsCard header="Total Revenues" Icon={CreditCardIcon} title="DA45,2310.89" subtitle="+20.1%"  subtitleClasses="text-muted underline" />
       </div>
 
       <div className="grid gap-4 grid-cols-6">
@@ -51,8 +51,15 @@ const page = () => {
           </div>
           <CustomBarChart className="px-5 py-4" chartData={chartData} />
         </div>
-        <div className="col-span-2 border-2 rounded-xl">
-
+        <div className={cn("col-span-2 border-2 rounded-xl px-10 py-8", geist.className)}>
+          <div className="">
+            <div className="font-medium text-base">
+              Meilleur produit vendue
+            </div>
+            <div className="font-normal text-sm text-muted">
+              You made 265 sales this month.
+            </div>
+          </div>
         </div>
       </div>
     </div>
