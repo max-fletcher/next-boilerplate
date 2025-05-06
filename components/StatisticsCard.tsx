@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { TIconTypes } from '@/types/icon.types'
 import React from 'react'
 
-interface StatisticsCardProp {
+interface StatisticsCardProps {
   header: string
   Icon: ({ classes, width, height, isActive }: TIconTypes) => JSX.Element
   title: string
@@ -11,7 +11,7 @@ interface StatisticsCardProp {
   subtitleClasses?: string
 }
 
-const StatisticsCard = ({header, title, Icon, subtitle, subtitleClasses}: StatisticsCardProp) => {
+const StatisticsCard = ({header, title, Icon, subtitle, subtitleClasses}: StatisticsCardProps) => {
   return (
     <div className={cn("w-full border radius-xl p-3.5 rounded-xl", geist.className)}>
       <div className='flex justify-between'>

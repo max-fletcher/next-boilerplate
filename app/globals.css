@@ -89,6 +89,11 @@
     /* CHART */
     --chart-1: 240, 10%, 4%, 1;
 
+    /* GROWTH CARD */
+    --growth-up: 142, 71%, 45%, 1;
+    --growth-down: 347, 85%, 46%, 1;
+  
+
     /* --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
@@ -128,6 +133,10 @@
 
     /* CHART */
     --chart-1: 263, 70%, 50%, 1;
+
+    /* GROWTH CARD */
+    --growth-up: 142, 71%, 45%, 1;
+    --growth-down: 347, 85%, 46%, 1;
 
     /* --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;

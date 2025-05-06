@@ -5,6 +5,7 @@ import CreditCardIcon from "@/components/icons/CreditCard"
 import DollarIcon from "@/components/icons/Dollar"
 import LineChartIcon from "@/components/icons/LineChart"
 import UserGroupIcon from "@/components/icons/UserGroup"
+import ProductGrowthListItem from "@/components/ProductGrowthListItem"
 import StatisticsCard from "@/components/StatisticsCard"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
@@ -22,6 +23,17 @@ const chartData = [
   { month: "October", desktop: 73 },
   { month: "November", desktop: 209 },
   { month: "December", desktop: 214 },
+]
+
+const productGrowthData = [
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
+  { title: "WOO shirt heavy", titleNum: 3550, subtitle: "T-shirts", subtitleNum: 12 },
 ]
 
 const page = () => {
@@ -51,14 +63,20 @@ const page = () => {
           </div>
           <CustomBarChart className="px-5 py-4" chartData={chartData} />
         </div>
-        <div className={cn("col-span-2 border-2 rounded-xl px-10 py-8", geist.className)}>
-          <div className="">
+        <div className={cn("col-span-2 border-2 rounded-xl px-5 py-4", geist.className)}>
+          <div className="px-5 py-5">
             <div className="font-medium text-base">
               Meilleur produit vendue
             </div>
             <div className="font-normal text-sm text-muted">
               You made 265 sales this month.
             </div>
+          </div>
+
+          <div className="flex flex-col gap-4 px-5">
+            {productGrowthData.map((product, index) =>
+              <ProductGrowthListItem key={index} {...product} />
+            )}
           </div>
         </div>
       </div>

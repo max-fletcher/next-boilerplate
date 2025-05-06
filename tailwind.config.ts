@@ -29,7 +29,9 @@ const config: Config = {
           ring: "hsl(var(--sidebar-ring))",
         },
         calendar_selected: "hsl(var(--calendar-selected))",
-        calendar_selected_text: "hsl(var(--calendar-selected-text))"
+        calendar_selected_text: "hsl(var(--calendar-selected-text))",
+        growth_up: "hsl(var(--growth-up))",
+        growth_down: "hsl(var(--growth-down))",
       },
     },
   },
