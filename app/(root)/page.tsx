@@ -38,7 +38,7 @@ const productGrowthData = [
 
 const page = () => {
   return (
-    <div className="px-9 py-9">
+    <div className="px-9 py-7">
       <div className={cn("font-bold text-3xl", geist.className)}>
         Tableau de bord
       </div>

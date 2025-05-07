@@ -8,7 +8,7 @@ import ChatBubble from "../icons/ChatBubble"
 
 const Navbar = ({user}: {user: User}) => {
   return (
-    <div className="w-full h-12 flex justify-between items-center ps-9 pe-5">
+    <div className="w-full h-14 flex justify-between items-center ps-9 pe-5">
       <div>
         <SearchField />
       </div>
