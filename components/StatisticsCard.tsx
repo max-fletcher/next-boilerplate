@@ -7,7 +7,7 @@ interface StatisticsCardProps {
   header: string
   Icon: ({ classes, width, height, isActive }: TIconTypes) => JSX.Element
   title: string
-  subtitle: string
+  subtitle: string|React.ReactNode
   subtitleClasses?: string
 }
 
