@@ -44,26 +44,32 @@ const page = () => {
       </div>
       <hr className="separator my-5" />
 
-      <div className="flex justify-between">
-        <HomeButtonGroupContainer className="p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937]" buttonClassName="rounded opacity-50" buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" isToggle={true} orientation="horizontal" />
-        <HomepageCalendar />
+      <div className="flex flex-col md:flex-row justify-between">
+        <HomeButtonGroupContainer 
+          className="p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937] mb-5 md:mb-0"
+          buttonClassName="rounded opacity-50" 
+          buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" 
+          isToggle={true} 
+          orientation="horizontal" 
+        />
+        <HomepageCalendar classes="md:w-[300px]" />
       </div>
 
-      <div className="flex gap-4 my-5">
-        <StatisticsCard header="Total Revenues" Icon={DollarIcon} title="DA45,2310.89" subtitle="+20.1%" subtitleClasses="text-green-500" />
-        <StatisticsCard header="Total de visiteurs" Icon={UserGroupIcon} title="2350" subtitle={<div>impressions, <span className="underline">Voir le rapport</span></div>} subtitleClasses="text-muted" />
-        <StatisticsCard header="Total Revenues" Icon={LineChartIcon} title="DA45,2310.89" subtitle="+20.1%" subtitleClasses="text-muted underline" />
-        <StatisticsCard header="Total Revenues" Icon={CreditCardIcon} title="DA45,2310.89" subtitle="+20.1%"  subtitleClasses="text-muted underline" />
+      <div className="my-5 grid grid-cols-1 md:grid-cols-4  gap-4">
+        <StatisticsCard header="Total Revenues" title="DA 45,2310.89" Icon={DollarIcon} classes="min-w-32" subtitle="+20.1%" subtitleClasses="text-green-500" />
+        <StatisticsCard header="Total de visiteurs" title="2350" Icon={UserGroupIcon} classes="min-w-32" subtitle={<div>impressions, <span className="underline">Voir le rapport</span></div>} subtitleClasses="text-muted" />
+        <StatisticsCard header="Total Revenues" title="DA 45,2310.89" Icon={LineChartIcon} classes="min-w-32 " subtitle="+20.1%" subtitleClasses="text-muted underline" />
+        <StatisticsCard header="Total Revenues" title="DA 45,2310.89" Icon={CreditCardIcon} classes="min-w-32" subtitle="+20.1%"  subtitleClasses="text-muted underline" />
       </div>
 
       <div className="grid gap-4 grid-cols-6">
-        <div className="col-span-4 border-2 rounded-xl">
+        <div className="col-span-6 md:col-span-4 border-2 rounded-xl">
           <div className={cn("m-6 font-medium text-sm", geist.className)}>
             Overview
           </div>
           <CustomBarChart className="px-5 py-4" chartData={chartData} />
         </div>
-        <div className={cn("col-span-2 border-2 rounded-xl px-5 py-4", geist.className)}>
+        <div className={cn("col-span-6 md:col-span-2 border-2 rounded-xl px-5 py-4", geist.className)}>
           <div className="px-5 py-5">
             <div className="font-medium text-base">
               Meilleur produit vendue

@@ -10,7 +10,11 @@ import { toast } from "@/hooks/use-toast"
 import { useEffect, useState } from "react"
 import { DateRange } from "react-day-picker"
 
-const HomepageCalendar = () => {
+interface HomepageCalendarProps {
+  classes?: string
+}
+
+const HomepageCalendar = ({classes}: HomepageCalendarProps) => {
   const [date, setDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined,
@@ -42,8 +46,9 @@ const HomepageCalendar = () => {
           id="date"
           variant={"outline"}
           className={cn(
-            "w-[300px] justify-start text-left font-normal",
-            !date && "text-muted-foreground"
+            "justify-start text-left font-normal",
+            !date && "text-muted-foreground",
+            classes
           )}
         >
           <CalendarIcon />

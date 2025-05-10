@@ -15,7 +15,7 @@ const LeftSidebar = ({user}: {user: User}) => {
   const pathname = usePathname()
 
   return (
-    <div className="overflow-y-auto min-w-72 w-1/4">
+    <div className="overflow-y-auto min-w-72 w-1/4 max-lg:hidden">
       <div className="min-h-[1100px] xl:min-h-[900px]">
         <div className="h-12 flex items-center ms-5">
           <Logo text="Admin Panel" />
