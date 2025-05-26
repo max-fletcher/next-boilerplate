@@ -51,6 +51,8 @@ const HomeButtonGroup = ({
   const [activeIndex, setActiveIndex] = useState<number | null>(isToggle ? 0 : null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  console.log('className', className, 'buttonClassName', buttonClassName)
+
   useEffect(() => {
     buttonRefs.current = buttonRefs.current.slice(0, buttons.length);
   }, [buttons]);

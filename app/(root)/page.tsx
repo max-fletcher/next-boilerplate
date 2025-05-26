@@ -7,6 +7,7 @@ import LineChartIcon from "@/components/icons/LineChart"
 import UserGroupIcon from "@/components/icons/UserGroup"
 import ProductGrowthListItem from "@/components/ProductGrowthListItem"
 import StatisticsCard from "@/components/StatisticsCard"
+import { Button } from "@/components/ui/button"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
 
@@ -42,12 +43,13 @@ const page = () => {
       <div className={cn("font-bold text-3xl", geist.className)}>
         Tableau de bord
       </div>
+
       <hr className="separator my-5" />
 
       <div className="flex flex-col md:flex-row justify-between">
         <HomeButtonGroupContainer 
-          className="p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937] mb-5 md:mb-0"
-          buttonClassName="rounded opacity-50" 
+          className="flex p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937] mb-5 md:mb-0"
+          buttonClassName="flex w-1/3 rounded opacity-50" 
           buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" 
           isToggle={true} 
           orientation="horizontal" 
