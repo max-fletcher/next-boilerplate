@@ -7,7 +7,6 @@ import LineChartIcon from "@/components/icons/LineChart"
 import UserGroupIcon from "@/components/icons/UserGroup"
 import ProductGrowthListItem from "@/components/ProductGrowthListItem"
 import StatisticsCard from "@/components/StatisticsCard"
-import { Button } from "@/components/ui/button"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
 
