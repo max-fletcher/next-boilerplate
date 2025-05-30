@@ -5,21 +5,25 @@ import { geist } from "@/lib/fonts/fonts"
 import { User } from "@/types/User.types"
 import { cn } from "@/lib/utils"
 import ChatBubble from "../icons/ChatBubble"
+import { ToggleNavbar } from "./ToggleNavbar"
 
 const Navbar = ({user}: {user: User}) => {
   return (
-    <div className="w-full h-14 flex justify-between items-center ps-9 pe-5">
+    <div className="flex w-full h-14 justify-end md:justify-between items-center px-9">
       <div>
+        <ToggleNavbar />
+      </div>
+      <div className="w-full md:w-[60%]">
         <SearchField />
       </div>
-      <div className="flex items-center justify-end min-w-20">
+      <div className="hidden md:flex items-center justify-end min-w-20">
         <ModeToggle />
         <div className="flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 border border-input bg-background shadow-sm
           h-9 w-9 justify-center hover:cursor-pointer ms-3"
         >
           <ChatBubble />
         </div>
-        <div className="dark:bg-[#1F2937] h-9 flex items-center px-3 rounded-md ms-3">
+        <div className="dark:bg-[#1F2937] h-9 flex items-center px-3 rounded-md ms-3 w-36">
           <Image
             className="rounded-full aspect-square object-cover"
             src="/profile.png"

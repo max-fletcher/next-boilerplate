@@ -1,10 +1,11 @@
 import React from 'react'
 import { Input } from '../ui/input'
+import { cn } from '@/lib/utils'
 
-const SearchField = () => {
+const SearchField = ({ className }: {className?: string }) => {
   return (
     <div className='flex items-center'>
-        <Input className='border-2 border-border dark:border-background bg-background' placeholder='Search'/>
+        <Input className={cn('border-2 border-border dark:border-background bg-background w-full', className)} placeholder='Search'/>
     </div>
   )
 }

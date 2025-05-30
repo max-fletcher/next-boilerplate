@@ -30,6 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       {/* NOTE: This is the mobile sidebar */}
       <div className="size-full flex-col">
           <Navbar user={loggedInUser} />
+          {/* <MobileNavbar user={loggedInUser} /> */}
           {children}
         {/* <div className="root-layout">
           <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" />
