@@ -10,16 +10,14 @@ import { ToggleNavbar } from "./ToggleNavbar"
 const Navbar = ({user}: {user: User}) => {
   return (
     <div className="flex w-full h-14 justify-end md:justify-between items-center px-9">
-      <div>
-        <ToggleNavbar />
-      </div>
-      <div className="w-full md:w-[60%]">
+      <ToggleNavbar classes="lg:hidden" />
+      <div className="w-full md:w-[60%] ms-5 md:mx-0">
         <SearchField />
       </div>
       <div className="hidden md:flex items-center justify-end min-w-20">
-        <ModeToggle />
+        <ModeToggle classes="me-2" />
         <div className="flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 border border-input bg-background shadow-sm
-          h-9 w-9 justify-center hover:cursor-pointer ms-3"
+          h-9 w-9 justify-center hover:cursor-pointer"
         >
           <ChatBubble />
         </div>
