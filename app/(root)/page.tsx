@@ -48,7 +48,7 @@ const page = () => {
       <div className="flex flex-col md:flex-row justify-between">
         <HomeButtonGroupContainer 
           className="flex p-1 rounded-lg bg-[#F4F4F5] dark:bg-[#1F2937] mb-5 md:mb-0"
-          buttonClassName="flex w-1/3 rounded opacity-50" 
+          buttonClassName="flex w-1/3 rounded opacity-50 px-2 md:px-4"
           buttonActiveClassName="bg-[#6D28D9] text-white opacity-100" 
           isToggle={true} 
           orientation="horizontal" 

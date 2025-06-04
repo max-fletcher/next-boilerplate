@@ -78,7 +78,7 @@ const HomeButtonGroup = ({
         'inline-flex',
         orientation === 'vertical' ? 'flex-col' : 'flex-row',
         isPill ? 'rounded-full' : 'rounded-md',
-        'shadow-sm gap-3',
+        'shadow-sm md:gap-3',
         className
       )}
       role='group'
@@ -125,9 +125,9 @@ const HomeButtonGroup = ({
             aria-pressed={isToggle ? isActive : undefined}
           >
             {loading && isActive ? (
-              <Loader2 className='mr-1 h-4 w-4 animate-spin' />
+              <Loader2 className='mr-0 md:mr-1 h-4 w-1 md:w-4 animate-spin' />
             ) : (
-              Icon && <Icon className='mr-2 h-4 w-4' />
+              Icon && <Icon className='mr-2 h-4 w-1 md:w-4' />
             )}
             {button.label}
           </Button>
