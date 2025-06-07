@@ -193,4 +193,8 @@
   .sidebar-margin {
     @apply mx-4;
   }
+
+  .sidebar-small {
+    @apply -left-[233px] peer-focus:left-0 ease-out delay-150 duration-300
+  }
 }

@@ -38,6 +38,7 @@ const productGrowthData = [
 
 const page = () => {
   return (
+    // h-[calc(99vh-60px)] overflow-y-scroll NOTE: Might be useful someday. Keeps the content part of the layout scrollable on overflow so navbar remains stuck on correct position i.e top of page
     <div className="px-9 py-7">
       <div className={cn("font-bold text-3xl", geist.className)}>
         Tableau de bord
