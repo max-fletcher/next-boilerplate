@@ -1,12 +1,9 @@
-
-// import MobileNav from "@/components/MobileNav"
-// import Sidebar from "@/components/Sidebar"
-// import Image from "next/image"
 // import { getLoggedInUser } from "../../lib/actions/user.actions"
 // import { redirect } from "next/navigation"
 
 import LeftSidebar from "@/components/LeftSidebar";
 import Navbar from "@/components/navbar/Navbar";
+import ClientLayoutProvider from "@/providers/sidebar.provider";
 import { User } from "@/types/User.types";
 
 const loggedInUser: User = {
@@ -24,21 +21,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <main className="flex h-screen w-full font-inter">
-      {/* <Sidebar user={loggedIn} /> */}
-      <LeftSidebar user={loggedInUser} />
+      <ClientLayoutProvider>
+        <LeftSidebar user={loggedInUser} />
 
-      {/* NOTE: This is the mobile sidebar */}
-      <div className="size-full flex-col">
+        <div className="size-full flex-col">
           <Navbar user={loggedInUser} />
-          {/* <MobileNavbar user={loggedInUser} /> */}
           {children}
-        {/* <div className="root-layout">
-          <Image src="/icons/logo.svg" width={30} height={30} alt="menu-icon" />
-          <div>
-            <MobileNav user={loggedIn} />
-          </div>
-        </div> */}
-      </div>
+        </div>
+      </ClientLayoutProvider>
     </main>
   )
 }

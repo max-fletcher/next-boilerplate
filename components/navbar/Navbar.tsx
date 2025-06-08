@@ -9,7 +9,7 @@ import { ToggleNavbar } from "./ToggleNavbar"
 
 const Navbar = ({user}: {user: User}) => {
   return (
-    <div className="sticky top-0 flex w-full h-14 justify-end md:justify-between items-center px-9">
+    <div className="bg-background opacity-100 z-10 sticky top-0 flex w-full h-14 justify-end md:justify-between items-center px-9">
       <ToggleNavbar classes="lg:hidden" />
       <div className="w-full md:w-[60%] ms-5 md:mx-0">
         <SearchField />
