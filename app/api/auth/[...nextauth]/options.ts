@@ -109,7 +109,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, trigger, session }: any) {
       console.log('token from jwt method', token, 'user', user)
 
-
       // if (trigger === 'update') {
       //   if (session?.avatar) {
       //     token.user.avatar = session.avatar

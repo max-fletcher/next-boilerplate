@@ -12,11 +12,15 @@ import { Button } from "./ui/button"
 import { sidebarLinksGroup1, sidebarLinksGroup2 } from "@/constants"
 import { useSidebar } from "@/contexts/SidebarContext"
 import { useEffect, useRef } from "react"
+import { useSession, signOut } from "next-auth/react"
 
 const LeftSidebar = ({user}: {user: User}) => {
   const pathname = usePathname()
   const { isSidebarOpen, closeSidebar } = useSidebar() // Using Context To Control Sidebar
   const sidebarRef = useRef<HTMLDivElement>(null)
+  const { data: session } = useSession()
+
+  console.log('next auth session data', session)
 
   // Close on outside click
   useEffect(() => {
@@ -114,6 +118,7 @@ const LeftSidebar = ({user}: {user: User}) => {
             <div className="sidebar-group-3 sidebar-margin">
               <Button
                 className={cn('sidebar-link' )} // A util function that merges classes. Uses twMerge under the hood.
+                onClick={() => signOut()}
               >
                   <div className="flex justify-center items-center relative size-6">
                     <TableOfContentsIcon width={20} height={20} />

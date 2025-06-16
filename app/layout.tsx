@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme.providers";
+import { AuthSessionProvider } from "@/providers/authSession.providers";
 
 // NOTE: creating and injecting fonts into the entire app
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
@@ -33,7 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthSessionProvider>
+            {children}
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
