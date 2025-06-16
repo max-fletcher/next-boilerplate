@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        // console.log('credentials', credentials)
+        console.log('credentials method', credentials)
         /*
          * You need to provide your own logic here that takes the credentials submitted and returns either
          * an object representing a user or value that is false/null if the credentials are invalid.
@@ -101,13 +101,15 @@ export const authOptions: NextAuthOptions = {
 
   // ** Please refer to https://next-auth.js.org/configuration/options#callbacks for more `callbacks` options
   callbacks: {
-    /*
-     * While using `jwt` as a strategy, `jwt()` callback will be called before
+    /* While using `jwt` as a strategy, `jwt()` callback will be called before
      * the `session()` callback. So we have to add custom parameters in `token`
-     * via `jwt()` callback to make them accessible in the `session()` callback
+     * via `jwt()` callback to make them accessible in the `session()` callback.
+     * If strategy: 'database', then this callback will not be called at all.
      */
     async jwt({ token, user, trigger, session }: any) {
-      // console.log('token from jwt method', token, 'user', user)
+      console.log('token from jwt method', token, 'user', user)
+      /* Trigger and session will be used when you use useSession() to update session data
+      */
 
       // if (trigger === 'update') {
       //   if (session?.avatar) {
@@ -121,19 +123,23 @@ export const authOptions: NextAuthOptions = {
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        // token.user = user.userInfo
         token.access_token = user.access_token
+        token.user = user.user
       }
 
       return token
     },
 
-    // ** "token" is the token data returned from jwt method above
+    // ** For strategy: 'jwt', "token" is the token data returned from jwt callback method above this method i.e session callback method.
+    // You will need to set the session.user equal to client-side session.user otherwise you won't be able to access
+    // this in client-side components using useSession() or getSession()
+    // ** For strategy: 'database', this function will be ran first(not sure about jwt callback) and we will need to set the user like this 
+    // according to docs (see https://next-auth.js.org/getting-started/client and search "Assuming a strategy: "database" is used....")
     async session({ session, token }: any) {
-      // console.log('token from token method', token)
+      console.log('token from session method', session, token)
       if (token?.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        // session.user = token.user
+        session.user = token.user
         session.access_token = token.access_token
       }
 

@@ -23,11 +23,11 @@ export default withAuth(
     // response.headers.set('custom-header', 'custom-value')
 
     /**
-   * get token from request
+   * this is how you get token from request when using nextauth
    */
     const { token } = request.nextauth;
 
-    console.log('token', token)
+    console.log('token from middleware', token)
 
     /**
      * get current path name

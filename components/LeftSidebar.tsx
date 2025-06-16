@@ -12,15 +12,15 @@ import { Button } from "./ui/button"
 import { sidebarLinksGroup1, sidebarLinksGroup2 } from "@/constants"
 import { useSidebar } from "@/contexts/SidebarContext"
 import { useEffect, useRef } from "react"
-import { useSession, signOut } from "next-auth/react"
+import { signOut } from "next-auth/react"
 
 const LeftSidebar = ({user}: {user: User}) => {
   const pathname = usePathname()
   const { isSidebarOpen, closeSidebar } = useSidebar() // Using Context To Control Sidebar
   const sidebarRef = useRef<HTMLDivElement>(null)
-  const { data: session } = useSession()
 
-  console.log('next auth session data', session)
+  // const { data: session } = useSession() // you can use this hooke "useSession" to get token data in a client component, that was stored in jwt method
+  // console.log('LeftSidebar: nextauth session data for client component', session)
 
   // Close on outside click
   useEffect(() => {
@@ -63,13 +63,13 @@ const LeftSidebar = ({user}: {user: User}) => {
             <div className="dark:bg-[#1F2937] h-9 flex items-center px-3 rounded-md sidebar-margin">
               <Image
                 className="rounded-full aspect-square object-cover"
-                src="/profile.png"
+                src={user.thumbnail_url ? user.thumbnail_url : "/profile.png"}
                 width={20}
                 height={20}
                 alt="menu-icon"
               />
               <div className={cn("ms-2 font-medium text-sm", geist.className)}>
-                {user.name}
+                {user.name ? user.name : 'Anonymous User'}
               </div>
             </div>
 
@@ -118,7 +118,7 @@ const LeftSidebar = ({user}: {user: User}) => {
             <div className="sidebar-group-3 sidebar-margin">
               <Button
                 className={cn('sidebar-link' )} // A util function that merges classes. Uses twMerge under the hood.
-                onClick={() => signOut()}
+                onClick={() => signOut({ redirect: false })}
               >
                   <div className="flex justify-center items-center relative size-6">
                     <TableOfContentsIcon width={20} height={20} />
