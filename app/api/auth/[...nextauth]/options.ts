@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        console.log('credentials', credentials)
+        // console.log('credentials', credentials)
         /*
          * You need to provide your own logic here that takes the credentials submitted and returns either
          * an object representing a user or value that is false/null if the credentials are invalid.
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
 
           const data = await res.json()
 
-          console.log('data', data, 'status', res.status)
+          // console.log('data', data, 'status', res.status)
 
           if (res.status === 401 || res.status === 400)
             throw new Error(JSON.stringify(data))
@@ -107,7 +107,7 @@ export const authOptions: NextAuthOptions = {
      * via `jwt()` callback to make them accessible in the `session()` callback
      */
     async jwt({ token, user, trigger, session }: any) {
-      console.log('token from jwt method', token, 'user', user)
+      // console.log('token from jwt method', token, 'user', user)
 
       // if (trigger === 'update') {
       //   if (session?.avatar) {
@@ -130,7 +130,7 @@ export const authOptions: NextAuthOptions = {
 
     // ** "token" is the token data returned from jwt method above
     async session({ session, token }: any) {
-      console.log('token from token method', token)
+      // console.log('token from token method', token)
       if (token?.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
         // session.user = token.user

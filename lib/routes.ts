@@ -6,7 +6,7 @@ export const LOGIN = "/api/auth/signin"; // NOTE: Should match with routes defin
 /**
  * root route
  */
-export const ROOT = "/";
+export const ROOT = "/dashboard";
 
 /**
  * auth routes
@@ -17,5 +17,5 @@ export const AUTH_ROUTES = ["/api/auth/signin"];
  * private routes
  */
 export const PRIVATE_ROUTES = [
-  "/",
+  "/dashboard",
 ];

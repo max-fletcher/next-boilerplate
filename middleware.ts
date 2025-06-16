@@ -27,6 +27,8 @@ export default withAuth(
    */
     const { token } = request.nextauth;
 
+    console.log('token', token)
+
     /**
      * get current path name
      */
@@ -59,9 +61,7 @@ export default withAuth(
     } else if (isAuthenticated && authRoutes) {
       // redirect to root
       return NextResponse.redirect(new URL(ROOT, request.url));
-    } else {
-      return NextResponse.next();
-    }
+    } 
 
     // NOTE: Send back the response
     return response
