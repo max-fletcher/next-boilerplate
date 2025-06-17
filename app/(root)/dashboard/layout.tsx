@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <main className="flex h-screen w-full font-inter">
       <ClientLayoutProvider>
-        <LeftSidebar user={{...session?.user, thumbnail_url}} />
+        <LeftSidebar />
 
         <div className="size-full flex-col">
           <Navbar user={{...session?.user, thumbnail_url}} />

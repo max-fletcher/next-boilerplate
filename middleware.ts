@@ -50,18 +50,25 @@ export default withAuth(
      * check if current path is auth
      */
     const authRoutes = AUTH_ROUTES.some((route: string) => {
+      console.log('Es authRoute ?', pathname, route, pathname.startsWith(route))
       return pathname.startsWith(route);
     });
+
+    console.log('middddd', isAuthenticated, isPrivateRoute, authRoutes)
 
     /**
      * redirect to login
      */
     if (!isAuthenticated && isPrivateRoute) {
+      console.log('One 1')
       return NextResponse.redirect(new URL(LOGIN, request.url));
     } else if (isAuthenticated && authRoutes) {
+      console.log('Two 2')
       // redirect to root
       return NextResponse.redirect(new URL(ROOT, request.url));
-    } 
+    }
+
+    console.log('Three 3')
 
     // NOTE: Send back the response
     return response
