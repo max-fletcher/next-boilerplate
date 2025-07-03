@@ -30,9 +30,9 @@ export default withAuth(
     console.log('token from middleware', token)
 
     /**
-     * get current path name
+     * get current path name without trailing slashes
      */
-    const pathname = request.nextUrl.pathname;
+    const pathname = request.nextUrl.pathname.replace(/\/$/, "");
 
     /**
      * define is authenticated as false
@@ -49,12 +49,12 @@ export default withAuth(
     /**
      * check if current path is auth
      */
-    const authRoutes = AUTH_ROUTES.some((route: string) => {
+    const isAuthRoute = AUTH_ROUTES.some((route: string) => {
       console.log('Es authRoute ?', pathname, route, pathname.startsWith(route))
       return pathname.startsWith(route);
     });
 
-    console.log('middddd', isAuthenticated, isPrivateRoute, authRoutes)
+    console.log('middddd', isAuthenticated, isPrivateRoute, isAuthRoute)
 
     /**
      * redirect to login
@@ -62,7 +62,9 @@ export default withAuth(
     if (!isAuthenticated && isPrivateRoute) {
       console.log('One 1')
       return NextResponse.redirect(new URL(LOGIN, request.url));
-    } else if (isAuthenticated && authRoutes) {
+    } 
+    
+    if (isAuthenticated && isAuthRoute) {
       console.log('Two 2')
       // redirect to root
       return NextResponse.redirect(new URL(ROOT, request.url));
@@ -102,7 +104,9 @@ export default withAuth(
 // 1. Static files like images, stylesheets, fonts
 // 2. Internal _next/* files (e.g., JavaScript bundles)
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  // # NOTE: test this later since GPT says This may unintentionally apply middleware to public assets like /favicon.ico, /images/..., etc.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icons|public|.*\\.svg$|.*\\.png$|.*\\.jpg$).*)"],
 };
 
 // NOTE: (Conditinal redirect) This is another(and preferred) way to define which routes this middleware will be applied to.

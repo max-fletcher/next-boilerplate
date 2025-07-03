@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        console.log('credentials method', credentials)
+        // console.log('credentials method', credentials)
         /*
          * You need to provide your own logic here that takes the credentials submitted and returns either
          * an object representing a user or value that is false/null if the credentials are invalid.
@@ -62,8 +62,6 @@ export const authOptions: NextAuthOptions = {
 
             return data
           }
-
-          console.log('whoops')
 
           return null
         } catch (e: any) {
@@ -107,7 +105,7 @@ export const authOptions: NextAuthOptions = {
      * If strategy: 'database', then this callback will not be called at all.
      */
     async jwt({ token, user, trigger, session }: any) {
-      console.log('token from jwt method', token, 'user', user)
+      // console.log('token from jwt method', token, 'user', user)
       /* Trigger and session will be used when you use useSession() to update session data
       */
 
@@ -123,9 +121,13 @@ export const authOptions: NextAuthOptions = {
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
+        token.name = user.user.name
+        token.email = user.user.email
         token.access_token = user.access_token
         token.user = user.user
       }
+
+      // console.log('token from jwt method after', token, 'user', user)
 
       return token
     },
@@ -136,12 +138,14 @@ export const authOptions: NextAuthOptions = {
     // ** For strategy: 'database', this function will be ran first(not sure about jwt callback) and we will need to set the user like this 
     // according to docs (see https://next-auth.js.org/getting-started/client and search "Assuming a strategy: "database" is used....")
     async session({ session, token }: any) {
-      console.log('token from session method', session, token)
+      // console.log('token from session method', session, token)
       if (token?.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        session.user = token.user
         session.access_token = token.access_token
+        session.user = token.user
       }
+
+      // console.log('token from session method after', session, token)
 
       return session
     }
