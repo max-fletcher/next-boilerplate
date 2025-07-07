@@ -26,7 +26,6 @@ export default withAuth(
    * this is how you get token from request when using nextauth
    */
     const { token } = request.nextauth;
-
     console.log('token from middleware', token)
 
     /**
@@ -90,6 +89,9 @@ export default withAuth(
     // return NextResponse.redirect(new URL('/api/hello', request.url)) // new URL accepts 2 params. 1st param is the relative URL and 2nd is the base URL
   },
   {
+    pages: {
+      signIn: '/sign-in',
+    },
     callbacks: {
       authorized: () => true,
     },

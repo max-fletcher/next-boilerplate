@@ -6,16 +6,27 @@ import { TAuthForm } from '@/constants/enums'
 import { authFormSchema } from '@/lib/schema/authForm.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const AuthForm = ({ type } : {type: TAuthForm}) => {
-  const router = useRouter()
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const router = useRouter()
+  const { status } = useSession()
+
+    // Redirect logged-in users away from this page
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard")
+    }
+  }, [status, router])
 
   const formSchema = authFormSchema(type)
 
@@ -34,42 +45,51 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
     try {
       console.log('onSubmit', data);
       // Sign up with AppWrite and create plaid token
-      if(type === TAuthForm.SIGN_UP){
-        const userData = { // Create a new object in order to mitigate typescript errors in signUp inside user.actions.ts(i.e createDwollaCustomer function inside signUp)
-          firstName: data.firstName!,
-          lastName: data.lastName!,
-          address1: data.address1!,
-          city: data.city!,
-          state: data.state!,
-          postalCode: data.postalCode!,
-          dateOfBirth: data.dateOfBirth!,
-          ssn: data.ssn!,
-          email: data.email,
-          password: data.password,
-        }
+      // if(type === TAuthForm.SIGN_UP){
+      //   const userData = { // Create a new object in order to mitigate typescript errors in signUp inside user.actions.ts(i.e createDwollaCustomer function inside signUp)
+      //     firstName: data.firstName!,
+      //     lastName: data.lastName!,
+      //     address1: data.address1!,
+      //     city: data.city!,
+      //     state: data.state!,
+      //     postalCode: data.postalCode!,
+      //     dateOfBirth: data.dateOfBirth!,
+      //     ssn: data.ssn!,
+      //     email: data.email,
+      //     password: data.password,
+      //   }
 
-        console.log('userData', userData);
-        // const newUser = await signUp(userData)
-        // setUser(newUser)
-      }
+      //   console.log('userData', userData);
+      //   // const newUser = await signUp(userData)
+      //   // setUser(newUser)
+      // }
 
       // NOTE: else condition here throws type error in response(An expression of type 'void' cannot be tested for truthiness) so we are using an if statement.
       if(type === TAuthForm.SIGN_IN){
-        // const response = await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // })
+        const res = await signIn("credentials", {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+          callbackUrl: "/dashboard",
+        })
 
-        // if(response !== null) router.push('/') // Navigate to homepage if logged in
+        // Navigate to homepage if logged in
+        if (res?.ok) {
+          router.push(res?.url || "/dashboard")
+          // setError("Invalid credentials")
+        } 
+        // else {
+        //   setError(null)
+        // }
       }
     } catch (error) {
-      console.log(error)
+      console.log('onSubmit error', error)
+      setError("Invalid credentials")
     }
     finally{
       setIsLoading(false)
     }
   }
-
 
   return (
     <section className="mt-[200px]">
@@ -80,6 +100,10 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
               <p className="text-16 font-normal text-gray-600">
                 { type === TAuthForm.SIGN_IN ? "Sign in to get started" : "Please enter your details" }
               </p>
+              <p className="text-16 font-normal text-red-600">
+                {error ? error : ''}
+              </p>
+              
             </h1>
           </div>
         </header>

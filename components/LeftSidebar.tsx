@@ -20,7 +20,6 @@ const LeftSidebar = () => {
   const sidebarRef = useRef<HTMLDivElement>(null)
 
   const { data: session } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
-  console.log('LeftSidebar: nextauth session data for client component', session)
 
   // Close on outside click
   useEffect(() => {
@@ -36,13 +35,16 @@ const LeftSidebar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [isSidebarOpen, closeSidebar])
 
+  useEffect(() => {
+    console.log('LeftSidebar: nextauth session data for client component', session)
+  }, [session])
+
   return (
     <>
       {/* Backdrop i.e dark-tinted background behind side-nav when opened */}
       {isSidebarOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden" />
       )}
-
 
       <div
         ref={sidebarRef}
@@ -117,13 +119,13 @@ const LeftSidebar = () => {
 
             <div className="sidebar-group-3 sidebar-margin">
               <Button
-                className={cn('sidebar-link' )} // A util function that merges classes. Uses twMerge under the hood.
+                className={cn('sidebar-link', 'flex w-full')} // A util function that merges classes. Uses twMerge under the hood.
                 onClick={() => signOut({ redirect: false })}
               >
                   <div className="flex justify-center items-center relative size-6">
                     <TableOfContentsIcon width={20} height={20} />
                   </div>
-                  <p className={cn("sidebar-label") }>
+                  <p className={cn('sidebar-label') }>
                     Logout
                   </p>
               </Button>

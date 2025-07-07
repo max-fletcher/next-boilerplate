@@ -27,7 +27,6 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        // console.log('credentials method', credentials)
         /*
          * You need to provide your own logic here that takes the credentials submitted and returns either
          * an object representing a user or value that is false/null if the credentials are invalid.
@@ -47,8 +46,6 @@ export const authOptions: NextAuthOptions = {
           })
 
           const data = await res.json()
-
-          // console.log('data', data, 'status', res.status)
 
           if (res.status === 401 || res.status === 400)
             throw new Error(JSON.stringify(data))
@@ -93,9 +90,9 @@ export const authOptions: NextAuthOptions = {
 
   // ** Please refer to https://next-auth.js.org/configuration/options#pages for more `pages` options
   // ** Used to ovverride default pages that next-auth provides. Not needed right now as we will be using next-auth's default for now.
-  // pages: {
-  //   signIn: '/login'
-  // },
+  pages: {
+    signIn: '/sign-in'
+  },
 
   // ** Please refer to https://next-auth.js.org/configuration/options#callbacks for more `callbacks` options
   callbacks: {
@@ -104,8 +101,7 @@ export const authOptions: NextAuthOptions = {
      * via `jwt()` callback to make them accessible in the `session()` callback.
      * If strategy: 'database', then this callback will not be called at all.
      */
-    async jwt({ token, user, trigger, session }: any) {
-      // console.log('token from jwt method', token, 'user', user)
+    async jwt({ token, user }: any) {
       /* Trigger and session will be used when you use useSession() to update session data
       */
 
@@ -117,17 +113,19 @@ export const authOptions: NextAuthOptions = {
 
       // ** "user" here is the data returned from "authorize" method above
       if (user) {
-        /*
+        /* IMPORTANT: DO NOT USE/PASS FORMATS TO token obj THAT next-auth DOESN'T SUPPORT (i.e token.user = user.user). IT WILL CAUSE MISMATCH AND HENCE, HYDRATION ISSUES CAUSING session TO BE null OR undefined
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        token.name = user.user.name
-        token.email = user.user.email
         token.access_token = user.access_token
-        token.user = user.user
+        token.user = {
+          id: user.user?.id || user.id,
+          name: user.user?.name || user.name,
+          email: user.user?.email || user.email,
+          // Add any other fields you need
+          avatar: user.user?.avatar || user.avatar,
+        }
       }
-
-      // console.log('token from jwt method after', token, 'user', user)
 
       return token
     },
@@ -138,14 +136,11 @@ export const authOptions: NextAuthOptions = {
     // ** For strategy: 'database', this function will be ran first(not sure about jwt callback) and we will need to set the user like this 
     // according to docs (see https://next-auth.js.org/getting-started/client and search "Assuming a strategy: "database" is used....")
     async session({ session, token }: any) {
-      // console.log('token from session method', session, token)
       if (token?.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
         session.access_token = token.access_token
         session.user = token.user
       }
-
-      // console.log('token from session method after', session, token)
 
       return session
     }
