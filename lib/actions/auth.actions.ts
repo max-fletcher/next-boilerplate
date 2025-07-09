@@ -1,7 +1,8 @@
 // NOTE: 'use server' here causes all function here to become server actions
 'use server'
 
-// import { parseStringify } from "../utils";
+import { SignUpParams } from "@/types/auth.types";
+import { parseStringify } from "../utils";
 
 // NOTE Fetch env variables instead of using say process.env.APPWRITE_DATABASE_ID everytime
 // const {
@@ -34,56 +35,35 @@
 //   }
 // }
 
-// export const signUp = async ({password , ...userData}: SignUpParams) => {
-//   const { email, firstName, lastName } = userData
+export const signUp = async (userData: SignUpParams) => {
+  const { name, email, password } = userData
+  try {
+    console.log('signUp data', name, email, password)
 
-//   let newUserAccount;
+    // Login API Call to match the user credentials and receive user data in response along with his role
+    const res = await fetch(`${process.env.API_URL}/api/v1/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+    })
 
-//   try {
-//     // NOTE: in server actions, we do Mutations|Database Operation|Fetch Request
-//     const { account, database } = await createAdminClient();
-//     newUserAccount = await account.create(
-//       ID.unique(),
-//       email,
-//       password,
-//       `${firstName} ${lastName}`
-//     )
+    const data = await res.json()
 
-//     if(!newUserAccount) throw new Error('Error creating user')
+    console.log('jsondata boi', res, data)
 
-//     const dwollaCustomerUrl = await createDwollaCustomer({...userData, type: 'personal'})
+    if (res.status === 401 || res.status === 400)
+      throw new Error(data.response.message)
 
-//     if(!dwollaCustomerUrl) throw new Error('Error creating Dwolla customer ')
+    if (res.status === 201) return parseStringify(data.user)
 
-//     const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl)
-
-//     console.log('before creating new user', userData, newUserAccount.$id, dwollaCustomerId, dwollaCustomerUrl);
-
-//     const newUser = await database.createDocument(
-//       DATABASE_ID!, // 1st param - ID of the database where we are storing the data
-//       USER_COLLECTION_ID!, // 2nd param - ID of the collection/table where we are storing the data
-//       ID.unique(), // 3rd param - generate a unique ID to use as primary key,
-//       {            // 4th param - Object containing all the data we are storing to each column in the correct sequence
-//         ...userData, userId: newUserAccount.$id, dwollaCustomerId, dwollaCustomerUrl // Some of the keys here are not renamed. May need to do that later.
-//       }
-//     )
-
-//     const session = await account.createEmailPasswordSession(email, password)
-
-//     // the "appwrite-session" can be replaced with any other name, but it has to be the same as the name used in appwrite.ts
-//     cookies().set("appwrite-session", session.secret, {
-//       path: "/",
-//       httpOnly: true,
-//       sameSite: "strict",
-//       secure: true,
-//     })
-
-//     // NOTE: The reason we are using this "parseStringify" function is because in Next JS, we can't pass large objects via server actions so we are stringifying it first
-//     return parseStringify(newUser)
-//   } catch (error) {
-//     console.error('Error', error)
-//   }
-// }
+    throw new Error(data.message)
+  } catch (error: any) {
+    console.log('authorize error', error)
+    throw new Error(error.message)
+  }
+}
 
 // export async function getLoggedInUser() { // This needs to be a normal function for some reason
 //   try {

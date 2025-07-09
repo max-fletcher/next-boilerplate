@@ -3,7 +3,9 @@ import CustomInput from '@/components/CustomInput'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { TAuthForm } from '@/constants/enums'
+import { signUp } from '@/lib/actions/auth.actions'
 import { authFormSchema } from '@/lib/schema/authForm.schema'
+import { SignUpParams } from '@/types/auth.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { signIn, useSession } from 'next-auth/react'
@@ -14,7 +16,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const AuthForm = ({ type } : {type: TAuthForm}) => {
-  // const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -41,28 +42,25 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setError(null)
     setIsLoading(true)
     try {
       console.log('onSubmit', data);
       // Sign up with AppWrite and create plaid token
-      // if(type === TAuthForm.SIGN_UP){
-      //   const userData = { // Create a new object in order to mitigate typescript errors in signUp inside user.actions.ts(i.e createDwollaCustomer function inside signUp)
-      //     firstName: data.firstName!,
-      //     lastName: data.lastName!,
-      //     address1: data.address1!,
-      //     city: data.city!,
-      //     state: data.state!,
-      //     postalCode: data.postalCode!,
-      //     dateOfBirth: data.dateOfBirth!,
-      //     ssn: data.ssn!,
-      //     email: data.email,
-      //     password: data.password,
-      //   }
+      if(type === TAuthForm.SIGN_UP){
+        const userData = { // Create a new object in order to mitigate typescript errors in signUp inside user.actions.ts(i.e createDwollaCustomer function inside signUp)
+          name: data.name!,
+          email: data.email,
+          password: data.password,
+        } as SignUpParams
 
-      //   console.log('userData', userData);
-      //   // const newUser = await signUp(userData)
-      //   // setUser(newUser)
-      // }
+        console.log('userData', userData);
+        const newUser = await signUp(userData)
+
+        console.log('newUser', newUser)
+
+        if(newUser) router.push("/dashboard")
+      }
 
       // NOTE: else condition here throws type error in response(An expression of type 'void' cannot be tested for truthiness) so we are using an if statement.
       if(type === TAuthForm.SIGN_IN){
@@ -73,18 +71,17 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
           callbackUrl: "/dashboard",
         })
 
+        console.log('sign-in res', res)
+
         // Navigate to homepage if logged in
-        if (res?.ok) {
+        if (res?.ok)
           router.push(res?.url || "/dashboard")
-          // setError("Invalid credentials")
-        } 
-        // else {
-        //   setError(null)
-        // }
+        else
+          throw new Error("Invalid credentials")
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log('onSubmit error', error)
-      setError("Invalid credentials")
+      setError(error.message)
     }
     finally{
       setIsLoading(false)
@@ -114,20 +111,7 @@ const AuthForm = ({ type } : {type: TAuthForm}) => {
               {
                 type === TAuthForm.SIGN_UP && (
                   <>
-                    <div className="flex gap-4">
-                      <CustomInput control={form.control} name="firstName" label="First Name" placeholder="Enter your first name" type="text" />
-                      <CustomInput control={form.control} name="lastName" label="Last Name" placeholder="Enter your last name" type="text" />
-                    </div>
-                    <CustomInput control={form.control} name="address1" label="Address" placeholder="Enter your specific address" type="text" />
-                    <CustomInput control={form.control} name="city" label="City" placeholder="Enter your city" type="text" />
-                    <div className="flex gap-4">
-                      <CustomInput control={form.control} name="state" label="State" placeholder="Enter your state e.g NY" type="text" />
-                      <CustomInput control={form.control} name="postalCode" label="Postal Code" placeholder="Enter postal code e.g 12110" type="text" />
-                    </div>
-                    <div className="flex gap-4">
-                      <CustomInput control={form.control} name="dateOfBirth" label="Date of birth" placeholder="YYYY-MM-DD" type="text" />
-                      <CustomInput control={form.control} name="ssn" label="SSN" placeholder="Enter SSN no. e.g 1234" type="text" />
-                    </div>
+                    <CustomInput control={form.control} name="name" label="Name" placeholder="Enter your name" type="text" />
                   </>
                 )
               }

@@ -6,14 +6,7 @@ export const authFormSchema = (type: TAuthForm) => {
   if(type === TAuthForm.SIGN_IN)
     // Sign In
     return z.object({
-      firstName: z.string().optional(),
-      lastName: z.string().optional(),
-      address1: z.string().optional(),
-      city: z.string().optional(),
-      state: z.string().optional(),
-      postalCode: z.string().optional(),
-      dateOfBirth: z.string().optional(),
-      ssn: z.string().optional(),
+      name: z.string().optional(),
       email: z.string().email().optional(),
       password: z.string().min(8, { message: "Password must be at least 8 characters." }),
     })
@@ -21,15 +14,7 @@ export const authFormSchema = (type: TAuthForm) => {
   else
       // Sign Up
       return z.object({
-        firstName: z.string().min(3),
-        lastName: z.string().min(3),
-        address1: z.string().max(50),
-        city: z.string().max(50),
-        state: z.string().min(2).max(2),
-        postalCode: z.string().min(5),
-        dateOfBirth: z.string().min(3),
-        ssn: z.string().min(3),
-        // Both Sign In & Sign Up
+        name: z.string().min(3),
         email: z.string().email(),
         password: z.string().min(8, { message: "Password must be at least 8 characters." }),
       })
