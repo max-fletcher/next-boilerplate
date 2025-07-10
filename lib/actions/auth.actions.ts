@@ -35,35 +35,35 @@ import { parseStringify } from "../utils";
 //   }
 // }
 
-export const signUp = async (userData: SignUpParams) => {
-  const { name, email, password } = userData
-  try {
-    console.log('signUp data', name, email, password)
+// export const signUp = async (userData: SignUpParams) => {
+//   const { name, email, password } = userData
+//   try {
+//     console.log('signUp data', name, email, password)
 
-    // Login API Call to match the user credentials and receive user data in response along with his role
-    const res = await fetch(`${process.env.API_URL}/api/v1/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, password })
-    })
+//     // Login API Call to match the user credentials and receive user data in response along with his role
+//     const res = await fetch(`${process.env.API_URL}/api/v1/register`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ name, email, password })
+//     })
 
-    const data = await res.json()
+//     const data = await res.json()
 
-    console.log('jsondata boi', res, data)
+//     console.log('jsondata boi', res, data)
 
-    if (res.status === 401 || res.status === 400)
-      throw new Error(data.response.message)
+//     if (res.status === 401 || res.status === 400)
+//       throw new Error(data.response.message)
 
-    if (res.status === 201) return parseStringify(data.user)
+//     if (res.status === 201) return parseStringify(data.user)
 
-    throw new Error(data.message)
-  } catch (error: any) {
-    console.log('authorize error', error)
-    throw new Error(error.message)
-  }
-}
+//     throw new Error(data.message)
+//   } catch (error: any) {
+//     console.log('authorize error', error)
+//     throw new Error(error.message)
+//   }
+// }
 
 // export async function getLoggedInUser() { // This needs to be a normal function for some reason
 //   try {

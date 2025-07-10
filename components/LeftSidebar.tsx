@@ -6,7 +6,7 @@ import Image from "next/image"
 import { geist } from "@/lib/fonts/fonts"
 import { cn } from "@/lib/utils"
 import TableOfContentsIcon from "./icons/TableOfContentsIcon"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { sidebarLinksGroup1, sidebarLinksGroup2 } from "@/constants"
@@ -18,6 +18,7 @@ const LeftSidebar = () => {
   const pathname = usePathname()
   const { isSidebarOpen, closeSidebar } = useSidebar() // Using Context To Control Sidebar
   const sidebarRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   const { data: session } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
 
@@ -120,7 +121,10 @@ const LeftSidebar = () => {
             <div className="sidebar-group-3 sidebar-margin">
               <Button
                 className={cn('sidebar-link', 'flex w-full')} // A util function that merges classes. Uses twMerge under the hood.
-                onClick={() => signOut({ redirect: false })}
+                onClick={async () => { // Apparantly, signOut() returns a promise so the async and await below is needed here, else, the page doesn't redirect to sign-in
+                  await signOut({ redirect: false })
+                  router.push('/sign-in')
+                }}
               >
                   <div className="flex justify-center items-center relative size-6">
                     <TableOfContentsIcon width={20} height={20} />

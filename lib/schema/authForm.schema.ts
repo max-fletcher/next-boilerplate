@@ -1,9 +1,9 @@
-import { TAuthForm } from "@/constants/enums"
+import { TAuthType } from "@/constants/enums"
 import { z } from "zod"
 
 // NOTE: We are exporting a function here instead of an object so we can accept a type and use conditionals. We can still get an object out of it by calling this function though.
-export const authFormSchema = (type: TAuthForm) => {
-  if(type === TAuthForm.SIGN_IN)
+export const authFormSchema = (type: TAuthType) => {
+  if(type === TAuthType.SIGN_IN)
     // Sign In
     return z.object({
       name: z.string().optional(),
@@ -21,5 +21,5 @@ export const authFormSchema = (type: TAuthForm) => {
 }
 
 // These are for using 'z.infer' since making a 'authFormSchema' causes a TS error ('authForm' is assigned a value but only used as a type)
-export const signUpForm = authFormSchema(TAuthForm.SIGN_UP)
-export const signInForm = authFormSchema(TAuthForm.SIGN_IN)
+export const signUpForm = authFormSchema(TAuthType.SIGN_UP)
+export const signInForm = authFormSchema(TAuthType.SIGN_IN)

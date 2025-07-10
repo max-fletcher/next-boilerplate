@@ -1,6 +1,7 @@
 import GithubProvider from 'next-auth/providers/github'
 import CredentialProvider from 'next-auth/providers/credentials'
 import type { NextAuthOptions  } from "next-auth"
+import { TAuthType } from '@/constants/enums'
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -22,8 +23,10 @@ export const authOptions: NextAuthOptions = {
 
       // ** If you don't use custom pages, e.g pages: { signIn: '/login' }, this option will provide a page with the relevant HTML input fields with labels, field type, placeholder etc.
       credentials: {
+        name: { label: "Name", type: "text" },
         email: { label: "Email", type: "text", placeholder: "john_doe@mail.com" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        type: { label: "Auth type", type: "text" }
       },
 
       async authorize(credentials) {
@@ -33,37 +36,57 @@ export const authOptions: NextAuthOptions = {
          * For e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
          * You can also use the `req` object to obtain additional parameters (i.e., the request IP address)
          */
-        const { email, password } = credentials as { email: string; password: string }
-
         try {
-          // Login API Call to match the user credentials and receive user data in response along with his role
-          const res = await fetch(`${process.env.API_URL}/api/v1/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-          })
+          const { name, email, password, type } = credentials as { name: string, email: string, password: string, type: TAuthType }
+
+          let res
+          if(type === TAuthType.SIGN_UP){
+            // Login API Call to match the user credentials and receive user data in response along with his role
+            res = await fetch(`${process.env.API_URL}/api/v1/register`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ name, email, password })
+            })
+          }
+          else{
+            // Login API Call to match the user credentials and receive user data in response along with his role
+            res = await fetch(`${process.env.API_URL}/api/v1/login`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email, password })
+            })
+          }
+
+          console.log('options authorize method res', res)
+          console.log('AND ONE')
 
           const data = await res.json()
 
-          if (res.status === 401 || res.status === 400)
-            throw new Error(JSON.stringify(data))
+          if (res.status === 401 || res.status === 400){
+            console.log('AND TWO', data, data.response.message || data.message || 'Creds suck bro')
+            throw new Error(data.response.message || data.message || 'Creds suck bro')
+          }
 
-          if (res.status === 200) {
+          if (res.status === 200 || res.status === 201) {
             /*
              * Please unset all the sensitive information of the user either from API response or before returning
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
 
+            console.log('AND THREE')
             return data
           }
 
           return null
-        } catch (e: any) {
-          console.log('authorize error', e)
-          throw new Error(e.message)
+        } catch (error: any) {
+          console.log('authorize error', error)
+          console.log('AND FOUR')
+          throw new Error(error)
         }
       }
     })
