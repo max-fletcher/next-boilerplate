@@ -1,8 +1,6 @@
 // NOTE: 'use server' here causes all function here to become server actions
 'use server'
-
-import { SignUpParams } from "@/types/auth.types";
-import { parseStringify } from "../utils";
+// import { parseStringify } from "../utils";
 
 // NOTE Fetch env variables instead of using say process.env.APPWRITE_DATABASE_ID everytime
 // const {

@@ -67,19 +67,13 @@ const AuthForm = ({ type } : {type: TAuthType}) => {
         })
       }
 
-      console.log('signIn response:', res)
-
       // Navigate to homepage if logged in
       if (res?.ok)
         router.push(res?.url || "/dashboard")
       else
         throw new Error(res?.error || "Invalid credentials")
-
-        // setError(res?.error || "Invalid credentials")
-      console.log('AuthForm onSubmit end')
     } catch (error: any) {
-      console.log('onSubmit error', error)
-      // setError(error.message)
+      // console.log('onSubmit error', error)
       setError(error.message?.replace(/^Error:\s*/, '') || "Something went wrong")
     }
     finally{
