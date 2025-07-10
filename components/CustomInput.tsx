@@ -35,7 +35,7 @@ const CustomInput = ({control, name, label, placeholder, type}: CustomInput) => 
                 {...field} 
               />
             </FormControl>
-            <FormMessage className="form-message mt-2" />
+            <FormMessage className="form-message text-red-600 mt-2" />
           </div>
         </div>
       )}
