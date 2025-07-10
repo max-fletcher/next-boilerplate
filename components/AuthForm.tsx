@@ -123,6 +123,11 @@ const AuthForm = ({ type } : {type: TAuthType}) => {
                     type === TAuthType.SIGN_IN ? "Sign In" : "Sign Up"
                   }
                 </Button>
+
+                <Button type="button" className="form-btn" onClick={() => signIn("github", { callbackUrl: "/dashboard" })} >
+                  Sign in with GitHub
+                </Button>
+
               </div>
             </form>
           </Form>
