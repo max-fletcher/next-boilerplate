@@ -26,7 +26,7 @@ export default withAuth(
    * this is how you get token from request when using nextauth
    */
     const { token } = request.nextauth;
-    console.log('token from middleware', token)
+    // console.log('token from middleware', token)
 
     /**
      * get current path name without trailing slashes
@@ -52,7 +52,7 @@ export default withAuth(
       return pathname.startsWith(route);
     });
 
-    console.log('middddd', isAuthenticated, isPrivateRoute, isAuthRoute)
+    // console.log('routes checkers', isAuthenticated, isPrivateRoute, isAuthRoute)
 
     /**
      * redirect to login

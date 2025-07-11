@@ -43,7 +43,7 @@ const AuthForm = ({ type } : {type: TAuthType}) => {
     setError(null)
     setIsLoading(true)
     try {
-      // Sign up with AppWrite and create plaid token
+      // Sign up or sign in using next-auth's signIn function
       let res
       if(type === TAuthType.SIGN_UP){
           res = await signIn("credentials", {
