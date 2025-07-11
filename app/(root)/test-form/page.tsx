@@ -2,7 +2,7 @@
 import CustomInput from '@/components/CustomInput'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { authFormSchema } from '@/lib/schema/authForm.schema'
+import { updateProfileSchema } from '@/lib/schema/updateProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
@@ -13,10 +13,7 @@ const TestForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // const router = useRouter()
-  // const { status } = useSession()
-
-  const formSchema = authFormSchema()
+  const formSchema = updateProfileSchema()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
