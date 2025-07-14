@@ -62,13 +62,12 @@ export const authOptions: NextAuthOptions = {
           }
 
           console.log('options authorize method res', res)
-          console.log('AND ONE')
 
           const data = await res.json()
 
           if (res.status === 401 || res.status === 400){
-            console.log('AND TWO', data, data.response.message || data.message || 'Creds suck bro')
-            throw new Error(data.response.message || data.message || 'Creds suck bro')
+            console.log('status === 400/401', data, data.response.message || data.message || 'Something went wrong. Please try again.')
+            throw new Error(data.response.message || data.message || 'Something went wrong. Please try again.')
           }
 
           if (res.status === 200 || res.status === 201) {
@@ -77,15 +76,12 @@ export const authOptions: NextAuthOptions = {
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
-
-            console.log('AND THREE')
             return data
           }
 
           return null
         } catch (error: any) {
           console.log('authorize error', error)
-          console.log('AND FOUR')
           throw new Error(error)
         }
       }
@@ -149,6 +145,8 @@ export const authOptions: NextAuthOptions = {
           avatar: user.user?.avatar || user.avatar,
         }
       }
+
+      console.log('token boi', token)
 
       return token
     },

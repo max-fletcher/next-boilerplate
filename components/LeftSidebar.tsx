@@ -66,7 +66,7 @@ const LeftSidebar = () => {
             <div className="dark:bg-[#1F2937] h-9 flex items-center px-3 rounded-md sidebar-margin">
               <Image
                 className="rounded-full aspect-square object-cover"
-                src={session?.user?.thumbnail_url ? session?.user?.thumbnail_url : "/profile.png"}
+                src={session?.user?.avatar ? session?.user?.avatar : "/profile.png"}
                 width={20}
                 height={20}
                 alt="menu-icon"

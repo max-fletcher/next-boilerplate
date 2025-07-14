@@ -12,7 +12,7 @@ import { getServerSession } from "next-auth";
 //   id: 1,
 //   name: 'John Doe',
 //   email: 'john@mail.com',
-//   thumbnail_url: '/profile.png', // File is in /public/profile.png
+//   avatar: '/profile.png', // File is in /public/profile.png
 // }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -21,7 +21,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // const loggedIn = await getLoggedInUser()
   // if(!loggedIn) redirect('/sign-in')
   const session = await getServerSession(authOptions)
-  const thumbnail_url = '/profile.png' // # NOTE: using a temporary thumbnail_url. Will change later. File is in /public/profile.png
   console.log('Dashboard RootLayout: nextauth session data for server component', session)
 
   return (
@@ -30,7 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <LeftSidebar />
 
         <div className="size-full flex-col">
-          <Navbar user={{...session?.user, thumbnail_url}} />
+          <Navbar />
           {children}
         </div>
       </ClientLayoutProvider>
