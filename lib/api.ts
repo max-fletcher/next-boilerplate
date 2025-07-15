@@ -49,6 +49,7 @@ export const apiCall = async (url: string, options: any) => {
 
     return { statusCode: response.status, ...data }
   } catch (error) {
+    console.log('apiCall', error)
     throw error
   }
 }

@@ -5,7 +5,7 @@ import { Form } from '@/components/ui/form'
 import { updateUser } from '@/lib/actions/auth.actions'
 import { updateProfileSchema } from '@/lib/schema/updateProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,7 +15,7 @@ const TestForm = () => {
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
 
-  const { data: session } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
+  const { data: session, update } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
 
   const formSchema = updateProfileSchema()
 
@@ -35,14 +35,18 @@ const TestForm = () => {
     setIsLoading(true)
     try {
       // Server action to submit formdata
-      // console.log('data', data, 'client session', session)
       if(!session?.user?.id) throw new Error('User not logged in.')
 
       const res = await updateUser(session?.user?.id, data)
 
       if (res){
         setMessage('Save successful !')
-        console.log('Saved', res)
+        const { name, email, avatar } = res.data
+
+        // directly update session data
+        await update({
+          user: { name, email, avatar },
+        })
       }
       else
         throw new Error(res?.error || "Invalid credentials")

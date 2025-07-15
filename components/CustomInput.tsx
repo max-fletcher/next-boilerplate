@@ -1,20 +1,18 @@
 import { FormControl, FormField, FormLabel, FormMessage } from "./ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Control, FieldPath } from 'react-hook-form'
-import { z } from 'zod'
-import { signUpForm } from "@/lib/schema/authForm.schema"
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 
-interface CustomInput {
-  control: Control<z.infer<typeof signUpForm>>,
+interface CustomInput<T extends FieldValues> {
+  control: Control<T>,
   // NOTE: "email" | "password" would work, but we will need to edit it on adding new fields. Hence, we are taking an inference of what this might be from authForm
-  name: FieldPath<z.infer<typeof signUpForm>>,
+  name: FieldPath<T>,
   label: string,
   placeholder: string,
   type: string,
 }
 
-const CustomInput = ({control, name, label, placeholder, type}: CustomInput) => {
+const CustomInput = <T extends FieldValues>({control, name, label, placeholder, type}: CustomInput<T>) => {
   return (
     <FormField
       control={control}

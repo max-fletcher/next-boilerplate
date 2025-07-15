@@ -37,8 +37,9 @@ export const authOptions: NextAuthOptions = {
          * You can also use the `req` object to obtain additional parameters (i.e., the request IP address)
          */
         try {
-          const { name, email, password, type } = credentials as { name: string, email: string, password: string, type: TAuthType }
+          const { name, email, password, type } = credentials as { name?: string, email?: string, password?: string, avatar?: string, type: TAuthType }
 
+          // # REPLACE fetch CALLS WITH FUNCTIONS FROM api.ts
           let res
           if(type === TAuthType.SIGN_UP){
             // Login API Call to match the user credentials and receive user data in response along with his role
@@ -120,15 +121,16 @@ export const authOptions: NextAuthOptions = {
      * via `jwt()` callback to make them accessible in the `session()` callback.
      * If strategy: 'database', then this callback will not be called at all.
      */
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, trigger, session }: any) {
       /* Trigger and session will be used when you use useSession() to update session data
       */
 
-      // if (trigger === 'update') {
-      //   if (session?.avatar) {
-      //     token.user.avatar = session.avatar
-      //   }
-      // }
+      // update session without login/register. "session" contains data that we sent via the update method
+      if (trigger === "update" && session?.user) {
+        token.user.name = session.user.name
+        token.user.email = session.user.email
+        token.user.avatar = session.user.avatar
+      }
 
       // ** "user" here is the data returned from "authorize" method above
       if (user) {
@@ -146,7 +148,7 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
-      console.log('token boi', token)
+      // console.log('token boi', token, user, trigger, session)
 
       return token
     },
