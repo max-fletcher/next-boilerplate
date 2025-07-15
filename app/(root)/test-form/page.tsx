@@ -2,9 +2,10 @@
 import CustomInput from '@/components/CustomInput'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
+import { updateUser } from '@/lib/actions/auth.actions'
 import { updateProfileSchema } from '@/lib/schema/updateProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -12,6 +13,9 @@ import { z } from 'zod'
 const TestForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
+
+  const { data: session } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
 
   const formSchema = updateProfileSchema()
 
@@ -19,6 +23,7 @@ const TestForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -30,14 +35,19 @@ const TestForm = () => {
     setIsLoading(true)
     try {
       // Server action to submit formdata
+      // console.log('data', data, 'client session', session)
+      if(!session?.user?.id) throw new Error('User not logged in.')
 
-      // Navigate to homepage if logged in
-      // if (res?.ok)
-      //   router.push(res?.url || "/dashboard")
-      // else
-      //   throw new Error(res?.error || "Invalid credentials")
+      const res = await updateUser(session?.user?.id, data)
+
+      if (res){
+        setMessage('Save successful !')
+        console.log('Saved', res)
+      }
+      else
+        throw new Error(res?.error || "Invalid credentials")
     } catch (error: any) {
-      // console.log('onSubmit error', error)
+      console.log('onSubmit error', error)
       setError(error.message?.replace(/^Error:\s*/, '') || "Something went wrong")
     }
     finally{
@@ -52,14 +62,15 @@ const TestForm = () => {
             <h1>
               <p className="text-16 font-normal text-red-600">
                 {error ? error : ''}
+                {message ? message : ''}
               </p>
             </h1>
           </div>
         </header>
 
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-4">
+              <CustomInput control={form.control} name="name" label="Name" placeholder="Enter your name" type="text" />
               <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email" type="text" />
               <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
 
@@ -67,11 +78,6 @@ const TestForm = () => {
                 <Button type="submit" className="form-btn" disabled={isLoading}>
                   Submit
                 </Button>
-
-                <Button type="button" className="form-btn" disabled={isLoading} onClick={() => signIn("github", { callbackUrl: "/dashboard" })} >
-                  Sign in with GitHub
-                </Button>
-
               </div>
             </form>
           </Form>

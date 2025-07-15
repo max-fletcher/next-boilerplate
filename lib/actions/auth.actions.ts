@@ -1,13 +1,9 @@
 // NOTE: 'use server' here causes all function here to become server actions
 'use server'
-// import { parseStringify } from "../utils";
 
-// NOTE Fetch env variables instead of using say process.env.APPWRITE_DATABASE_ID everytime
-// const {
-//   APPWRITE_DATABASE_ID: DATABASE_ID, // We are renaming the env variable here
-//   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID, // We are renaming the env variable here
-//   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID, // We are renaming the env variable here
-// } = process.env
+import { apiCall } from "../api";
+
+// import { parseStringify } from "../utils";
 
 // export const signIn = async ({email, password}: signInProps) => { // Directly destructuring the varaibles that we get as params
 //   try {
@@ -63,20 +59,23 @@
 //   }
 // }
 
-// export async function getLoggedInUser() { // This needs to be a normal function for some reason
-//   try {
-//     const { account } = await createSessionClient()
-//     const result = await account.get()
+export async function updateUser(id: number, data: any) { // This needs to be a normal function for some reason
+  try {
+    // Don't bother settign headers here like(headers: { 'Content-Type': 'multipart/form-data' }) because it will throw an error. Seems the PATCH method in fetch takes care of "Content-Type".
+    const res = await apiCall(`users/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      cache: 'no-store'
+    })
 
-//     const user = await getUserInfo({ userId: result.$id })
+    // console.log('updateUser res', res)
 
-//     NOTE: The reason we are using this "parseStringify" function is because in Next JS, we can't pass large objects via server actions so we are stringifying it first
-//     return parseStringify({ data: 'data' })
-//   } catch (e) {
-//     console.error('Error', e);
-//     return null
-//   }
-// }
+    return res
+  } catch (e) {
+    console.error('Error', e);
+    return null
+  }
+}
 
 // export const logoutAccount = async () => {
 //   try {
