@@ -43,7 +43,7 @@ export const authOptions: NextAuthOptions = {
           let res
           if(type === TAuthType.SIGN_UP){
             // Login API Call to match the user credentials and receive user data in response along with his role
-            res = await fetch(`${process.env.API_URL}/api/v1/register`, {
+            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/register`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
           }
           else{
             // Login API Call to match the user credentials and receive user data in response along with his role
-            res = await fetch(`${process.env.API_URL}/api/v1/login`, {
+            res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/login`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,6 @@ export const authOptions: NextAuthOptions = {
           const data = await res.json()
 
           if (res.status === 401 || res.status === 400){
-            console.log('status === 400/401', data, data.response.message || data.message || 'Something went wrong. Please try again.')
             throw new Error(data.response.message || data.message || 'Something went wrong. Please try again.')
           }
 

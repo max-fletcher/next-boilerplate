@@ -2,13 +2,13 @@
 import CustomInput from '@/components/CustomInput'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { updateUser } from '@/lib/actions/auth.actions'
-import { updateProfileSchema } from '@/lib/schema/updateProfile.schema'
+import { TUserUpdateSchema, userUpdateSchema } from '@/lib/schema/updateProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useForm, Controller } from 'react-hook-form'
+import { FileDropzone } from '@/components/DropZone'
+import { updateUser } from '@/lib/api'
 
 const TestForm = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -17,27 +17,26 @@ const TestForm = () => {
 
   const { data: session, update } = useSession() // you can use this hook "useSession" to get token data in a client component, that was stored in jwt method
 
-  const formSchema = updateProfileSchema()
-
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TUserUpdateSchema>({
+    resolver: zodResolver(userUpdateSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
+      avatar: undefined
     },
   })
 
-  // 2. Define a submit handler.
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: TUserUpdateSchema) => {
     setError(null)
     setIsLoading(true)
     try {
       // Server action to submit formdata
       if(!session?.user?.id) throw new Error('User not logged in.')
 
-      const res = await updateUser(session?.user?.id, data)
+      console.log('submit lol', data)
+      const res = await updateUser(session, data)
 
       if (res){
         setMessage('Save successful !')
@@ -77,6 +76,14 @@ const TestForm = () => {
               <CustomInput control={form.control} name="name" label="Name" placeholder="Enter your name" type="text" />
               <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email" type="text" />
               <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
+              <Controller
+                name="avatar"
+                control={form.control}
+                defaultValue={[]}
+                render={({ field: { value, onChange } }) => (
+                  <FileDropzone selectedFiles={value} onFiles={onChange} />
+                )}
+              />
 
               <div className="flex flex-col gap-4">
                 <Button type="submit" className="form-btn" disabled={isLoading}>
