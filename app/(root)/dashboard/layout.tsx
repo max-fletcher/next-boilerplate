@@ -4,16 +4,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import LeftSidebar from "@/components/LeftSidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ClientLayoutProvider from "@/providers/sidebar.provider";
-// import { User } from "@/types/User.types";
 import { getServerSession } from "next-auth";
 
-// Dummy data in case you want to not use nextauth
-// const loggedInUser: User = {
-//   id: 1,
-//   name: 'John Doe',
-//   email: 'john@mail.com',
-//   avatar: '/profile.png', // File is in /public/profile.png
-// }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Acts like a middleware. Will redirect user to "/sign-in" if he is not logged in

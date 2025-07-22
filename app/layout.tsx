@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/providers/theme.providers";
 import { AuthSessionProvider } from "@/providers/authSession.providers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { ReduxProvider } from "@/providers/store.provider";
 
 // NOTE: creating and injecting fonts into the entire app
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
@@ -39,7 +40,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthSessionProvider session={session}>
-            {children}
+            <ReduxProvider>
+              {children}
+            </ReduxProvider>
           </AuthSessionProvider>
         </ThemeProvider>
       </body>

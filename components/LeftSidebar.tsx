@@ -1,6 +1,5 @@
 "use client"
 
-// import { User } from "@/types/User.types"
 import Logo from "./navbar/Logo"
 import Image from "next/image"
 import { geist } from "@/lib/fonts/fonts"
