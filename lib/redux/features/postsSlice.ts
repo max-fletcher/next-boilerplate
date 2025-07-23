@@ -21,7 +21,7 @@ const postsAdapter = createEntityAdapter<TPost>({
 // Binding the "postsAdapter" "getInitialState" function to a variable called "initialState". We don't need to define an array of
 // objects(in this case "posts: []") for storing the default array/data structure. It is automatically defined. We are not defining
 // 'status', 'error' and 'count' for this instance since some/all of it will be defined by RTK QUERY.
-const initialState = postsAdapter.getInitialState()
+const initialState: EntityState<TPost, number> = postsAdapter.getInitialState()
 
 // importing apiSlice and then injecting endpoints to it from here instead of defining it there.
 export const extendedApiSlice = apiSlice.injectEndpoints({
@@ -31,24 +31,31 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: () => '/posts',
       // transform the data before storing/cacheing it. We are looping over the data and adding a date to every one of them. But we
       // we are incrementing that time by 1 min as we loop. We are also appending reactions to every post as well.
-      transformResponse: (responseData: TPost[]) => {
-          // loadedPosts is a new array of posts that we are getting as we loop over the response data. We are adding 'reactions' as stated above.
-          const loadedPosts = responseData.map((post: TPost) => {
-            // if a post doesn't have a reaction object appended to it, then append a reactions object to it.
-            if(!post?.reactions){
-                post.reactions = {
-                  thumbsUp: 0,
-                  wow: 0,
-                  heart: 0,
-                  rocket: 0,
-                  coffee: 0,
-                }
-            }
+      transformResponse: (responseData: {
+        status: string;
+        message: string;
+        response: {
+          data: TPost[];
+          [key: string]: any;
+        };
+      }) => {
+        // loadedPosts is a new array of posts that we are getting as we loop over the response data(after extracting posts from the JSON response). We are adding 'reactions' as stated above.
+        const loadedPosts = responseData.response.data.map((post: TPost) => {
+          // if a post doesn't have a reaction object appended to it, then append a reactions object to it.
+          if(!post?.reactions){
+              post.reactions = {
+                thumbsUp: 0,
+                wow: 0,
+                heart: 0,
+                rocket: 0,
+                coffee: 0,
+              }
+          }
 
-            return post;
-          })
-          // we are using setAll so that the postsAdapter normalizes the data being set as 'initialState'
-          return postsAdapter.setAll(initialState, loadedPosts)
+          return post;
+        })
+        // we are using setAll so that the postsAdapter normalizes the data being set as 'initialState'
+        return postsAdapter.setAll(initialState, loadedPosts)
       },
       // instead of using a single tag inside an array, we are defining furthur logic inside a function so that if the id
       // of any posts change, we invalidate the cache and re-fetch posts.
@@ -73,28 +80,33 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              { type: 'Post' as const, id: 'LIST' },
+              { type: 'Post', id: 'LIST' },
               ...result.ids.map((id) => ({ type: 'Post' as const, id }))
             ]
-          : [{ type: 'Post' as const, id: 'LIST' }]
+          : [{ type: 'Post', id: 'LIST' }]
     }),
     getPostById: builder.query<EntityState<TPost, number>, number>({ // Get single post by id
       query: (id) => `/posts/${id}`,
       // transform the data before storing/cacheing it. We are looping over the data and adding a date to every one of them. But we
       // we are incrementing that time by 1 min as we loop. We are also appending reactions to every post as well.
-      transformResponse: (responseData: TPost) => {
+      transformResponse: (responseData: {
+        status: string;
+        message: string;
+        data: TPost;
+      }) => {
             // if a post doesn't have a reaction object appended to it, then append a reactions object to it.
-            if(!responseData?.reactions){
-                responseData.reactions = {
+            let post = { ...responseData.data }
+            if(!responseData.data.reactions){
+                post = {...post, reactions: {
                   thumbsUp: 0,
                   wow: 0,
                   heart: 0,
                   rocket: 0,
                   coffee: 0,
-                }
+                }}
             }
           // we are using setAll so that the postsAdapter normalizes the data being set as 'initialState'
-          return postsAdapter.setOne(initialState, responseData)
+          return postsAdapter.setOne(initialState, post)
       },
       providesTags: (result, error, id) => { // selectively invalidating cache
         console.log('getPostById RTK extendedApi slice result', result)
@@ -214,10 +226,12 @@ export const {
 export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select() // accessing select() via ".endpoints" in "extendedApiSlice"
 // (since it is an object), then "getPosts"(which is a method) and finally, the "select()" method which is providing us a result object(which
 // contains not just the data, but the "isLoading", "isSuccess", "isError" & "error" as well)
+console.log('selectPostsResult', selectPostsResult)
 
 // create memoized selectors. In the above block, we are getting the entire result(i.e the nomalized state objects with ids & entities along
 // with the "isLoading", "isSuccess", "isError" & "error") so we are just passing the "data" part of that object.
 const selectPostsData = (state: RootState) => selectPostsResult(state)?.data ?? initialState
+console.log('selectPostsData', selectPostsData)
 
 // THESE ARE SELECTORS AS WELL
 // using "selectPostsData" to create selectors using "getSelectors()" function.

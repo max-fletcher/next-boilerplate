@@ -8,6 +8,7 @@ export const store = configureStore({
     counter: counterReducer, // for counter slice
     [extendedApiSlice.reducerPath]: extendedApiSlice.reducer, // for extendedApiSlice
   },
+  // The middleware line ensures RTK Query can: Cache responses, Automatically manage background refetching & Handle invalidations
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(extendedApiSlice.middleware),
 })
