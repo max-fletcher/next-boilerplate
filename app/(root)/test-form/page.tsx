@@ -73,25 +73,25 @@ const TestForm = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-4">
-              <CustomInput control={form.control} name="name" label="Name" placeholder="Enter your name" type="text" />
-              <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email" type="text" />
-              <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
-              <Controller
-                name="avatar"
-                control={form.control}
-                defaultValue={[]}
-                render={({ field: { value, onChange } }) => (
-                  <FileDropzone selectedFiles={value} onFiles={onChange} />
-                )}
-              />
+            <CustomInput control={form.control} name="name" label="Name" placeholder="Enter your name" type="text" />
+            <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email" type="text" />
+            <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
+            <Controller
+              name="avatar"
+              control={form.control}
+              defaultValue={[]}
+              render={({ field: { value, onChange } }) => (
+                <FileDropzone selectedFiles={value} onFiles={onChange} />
+              )}
+            />
 
-              <div className="flex flex-col gap-4">
-                <Button type="submit" className="form-btn" disabled={isLoading}>
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </Form>
+            <div className="flex flex-col gap-4">
+              <Button type="submit" className="form-btn" disabled={isLoading}>
+                Submit
+              </Button>
+            </div>
+          </form>
+        </Form>
 
         <section>
           <footer className="flex justify-center gap-1">

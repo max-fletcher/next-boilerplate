@@ -2,7 +2,7 @@
 // so that we can return normalized values in a way that is considered the usual convention.
 import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { apiSlice } from "../apiSlice";
-import { TNewPost, TPost } from "@/types/Post.types";
+import { TNewPost, TPost, TUpdatePost } from "@/types/Post.types";
 import { RootState } from "../store";
 
 // Importing apiSlice that uses RTK QUERY. We will be defining and adding more logic to extend the endpoints for posts RTK QUERY from here.
@@ -127,12 +127,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: "Post", id: "LIST" }
       ]
     }),
-    updatePost: builder.mutation<TPost, TPost>({ // Add new post
+    updatePost: builder.mutation<TPost, TUpdatePost>({ // Add new post
       // hit the '/posts/id' endpoint with method = PUT and a body that contains data
-      query: (initialPost) => ({
-          url: `/posts/${initialPost.id}`,
-          method: 'PUT',
-          body: initialPost
+      query: (updatedPost) => ({
+          url: `/posts/${updatedPost.id}`,
+          method: 'PATCH',
+          body: updatedPost
       }),
       invalidatesTags: (result, error, arg) => { // arg contains the original post and hence, arg.id is the post id
         console.log('updatePost RTK extendedApi slice result', result)

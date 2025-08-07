@@ -1,6 +1,7 @@
 "use client"
 
 import { useGetPostsQuery } from "@/lib/redux/features/postsSlice"
+import Link from "next/link"
 
 const GetPostsQuery = () => {
   const { data: posts, isLoading, isSuccess, isError, error } = useGetPostsQuery()
@@ -12,11 +13,13 @@ const GetPostsQuery = () => {
       {isSuccess && posts.ids.map((id) => {
         const post = posts.entities[id]
         return (
-          <div key={id} className="mb-4 border p-4 rounded">
-            <h4 className="text-lg font-semibold">{post?.title}</h4>
-            <p>{post?.text}</p>
-            <small>Posted by: {post?.user?.name}</small>
-          </div>
+          <Link key={id}   href={{ pathname: `/redux/posts-with-rtk-query/${id}` }}>
+            <div className="mb-4 border p-4 rounded">
+              <h4 className="text-lg font-semibold">{post?.title}</h4>
+              <p>{post?.text}</p>
+              <small>Posted by: {post?.user?.name}</small>
+            </div>
+          </Link>
         )
       })}
     </>

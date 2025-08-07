@@ -6,7 +6,7 @@ export interface TPost {
   title: string
   text: string
   created_at: string
-  userId: number
+  user_id: number
   user: User
   comments: Comment[]
   reactions?: {
@@ -18,4 +18,6 @@ export interface TPost {
   }
 }
 
-export type TNewPost = Omit<TPost, 'id'>;
+export type TNewPost = Omit<TPost, 'id'|'created_at'|'user'|'comments'|'reactions'>;
+
+export type TUpdatePost = Omit<TPost, 'created_at'|'user'|'comments'|'reactions'>;
