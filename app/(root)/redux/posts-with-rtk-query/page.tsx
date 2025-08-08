@@ -77,7 +77,6 @@ const Page = () => {
         </div>
       </header>
 
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-4">
           <CustomInput control={form.control} name="title" label="Title" placeholder="Enter title" type="text" />
@@ -91,9 +90,6 @@ const Page = () => {
           </div>
         </form>
       </Form>
-
-
-
     </>
   )
 }

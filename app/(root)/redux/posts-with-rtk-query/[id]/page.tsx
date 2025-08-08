@@ -1,5 +1,5 @@
 "use client"
-import { useGetPostByIdQuery } from "@/lib/redux/features/postsSlice";
+import { useDeletePostMutation, useGetPostByIdQuery } from "@/lib/redux/features/postsSlice";
 import { Form } from "@/components/ui/form"
 import { postUpdateSchema, TPostUpdateSchema } from "@/lib/schema/updatePost.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,6 +28,20 @@ const Page = ({ params }: SinglePostPage) => {
   const { data, isLoading: isPostLoading, isSuccess: isPostSuccess, isError: isPostError, error: postError } = useGetPostByIdQuery(params?.id)
   console.log('Single GetPostByIdQuery post RTK states', data, isPostLoading, isPostSuccess, isPostError, postError)
 
+  const [deletePost, { isLoading: isDeleteLoading, isSuccess: isDeleteSuccess, error: deleteError }] = useDeletePostMutation()
+  console.log('Delete post RTK states', isDeleteLoading, isDeleteSuccess, deleteError)
+
+  const handleDelete = async () => {
+    setError(null)
+    try {
+      await deletePost({ id: params?.id }).unwrap()
+      setMessage('Delete successful !')
+    } catch (error: any) {
+      const apiMessage = error?.data?.response?.message || error?.message || 'Delete failed'
+      setError(apiMessage)
+    }
+  }
+
   // Extract post from RTK cache of entities
   const post = useMemo(() => {
     if (!data || data.ids.length === 0) return null
@@ -50,7 +64,6 @@ const Page = ({ params }: SinglePostPage) => {
       setMessage('Save successful !')
     } catch (error: any) {
       console.log('onSubmit error', error)
-
       const apiMessage = error?.data?.response?.message || error?.message || 'Something went wrong'
       setError(apiMessage)
     }
@@ -85,6 +98,11 @@ const Page = ({ params }: SinglePostPage) => {
           <h4 className="text-lg font-semibold">{post?.title}</h4>
           <p>{post?.text}</p>
           <small>Posted by: {post?.user?.name}</small>
+          {/* disabled={isUpdateLoading} */}
+          <br />
+          <Button onClick={handleDelete} disabled={isDeleteLoading} className="p-4 mt-3 bg-neutral-700 text-red-600"> 
+            {isDeleteLoading ? "Deleting..." : "Delete"}
+          </Button>
         </div>
       }
 

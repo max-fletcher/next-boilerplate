@@ -66,24 +66,29 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       // the significance is that now, you have more granular control of what elements, or if all elements will be invalidated in cache
       // based on what the "invalidatesTags" property passes from each endpoint, which is better from a UX/UI perspective since it will
       // only re-render the components whose data is being updated without re-rendering the components whose data is not being re-fetched.
-      // providesTags: (result, error, arg) => {
-      //   console.log('getPosts RTK extendedApi slice result', result)
-      //   console.log('getPosts RTK extendedApi slice error', error, arg)
 
-      //   if (!result) return [{ type: 'Post', id: 'LIST' }] as const;
+      providesTags: (result, error, arg) => {
+        console.log('getPosts RTK extendedApi slice result', result);
+        console.log('getPosts RTK extendedApi slice error', error, arg);
 
-      //   return [
-      //   { type: 'Post', id: 'LIST' },
-      //     ...result.ids.map((id) => ({ type: 'Post', id })),
-      //   ] as const;
-      // }
-      providesTags: (result) =>
-        result
-          ? [
-              { type: 'Post', id: 'LIST' },
-              ...result.ids.map((id) => ({ type: 'Post' as const, id }))
-            ]
-          : [{ type: 'Post', id: 'LIST' }]
+        if (!result) {
+          return [{ type: 'Post' as const, id: 'LIST' }];
+        }
+
+        return [
+          { type: 'Post' as const, id: 'LIST' },
+          ...result.ids.map((id) => ({ type: 'Post' as const, id })),
+        ];
+      }
+
+      // SAME AS ABOVE BUT SHORTER:
+      // providesTags: (result) =>
+      //   result
+      //     ? [
+      //         { type: 'Post', id: 'LIST' },
+      //         ...result.ids.map((id) => ({ type: 'Post' as const, id }))
+      //       ]
+      //     : [{ type: 'Post', id: 'LIST' }]
     }),
     getPostById: builder.query<EntityState<TPost, number>, number>({ // Get single post by id
       query: (id) => `/posts/${id}`,
@@ -127,7 +132,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: "Post", id: "LIST" }
       ]
     }),
-    updatePost: builder.mutation<TPost, TUpdatePost>({ // Add new post
+    updatePost: builder.mutation<TPost, TUpdatePost>({ // Update post
       // hit the '/posts/id' endpoint with method = PUT and a body that contains data
       query: (updatedPost) => ({
           url: `/posts/${updatedPost.id}`,
@@ -140,7 +145,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         return [{ type: 'Post', id: arg.id }]
       }
     }),
-    deletePost: builder.mutation<{ success: boolean; id: number }, { id: number }>({ // Add new post
+    deletePost: builder.mutation<{ success: boolean; id: number }, { id: number }>({ // Delete post
       // hit the '/posts/id' endpoint with method = DELETE and a body that contains the id of the post
       query: ({ id }) => ({ // using destructuring to get the post id only and not the entire post object
           url: `/posts/${id}`,
